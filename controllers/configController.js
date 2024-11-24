@@ -1,12 +1,30 @@
-const URLFactory = require("../services/deployService");
+const express = require("express");
+const router = express.Router();
+const configController = require("../controllers/configController");
 
-exports.createDeployment = (req, res) => {
-  const { activityID, InvenRAstdID, json_params } = req.body;
+/**
+ * @swagger
+ * /deploy:
+ *   post:
+ *     summary: Cria uma nova instância de simulação
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Deployment'
+ *     responses:
+ *       200:
+ *         description: URL da instância criada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 activity_url:
+ *                   type: string
+ *                   description: URL da simulação criada
+ */
+router.post("/", configController.createDeployment);
 
-  if (!activityID || !InvenRAstdID || !json_params) {
-    return res.status(400).json({ error: "Missing required fields" });
-  }
-
-  const instanceURL = URLFactory.createInstanceURL(activityID);
-  res.json({ activity_url: instanceURL });
-};
+module.exports = router;

@@ -5,12 +5,12 @@ const listEndpoints = require("express-list-endpoints");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
+const PORT = process.env.PORT || 3000; // Porta definida nas variáveis de ambiente ou 3000 como padrão
+const BASE_URL = process.env.BASE_URL || "http://localhost:3000"; // URL base definida no .env ou localhost
 
 // Middleware para Logs e CORS
-app.use(morgan("combined")); // Logs detalhados
-app.use(cors({ origin: "*" })); // Permitir todos os domínios (ajuste conforme necessário)
+app.use(morgan("combined")); // Logs detalhados no terminal para monitorar requisições
+app.use(cors({ origin: "*" })); // Permitir todos os domínios (para produção, ajuste para restringir)
 
 // Middleware para Log de Requisições
 app.use((req, res, next) => {
@@ -19,10 +19,14 @@ app.use((req, res, next) => {
 });
 
 // Middleware para Processamento de Requisições
-app.use(express.json());
+app.use(express.json()); // Processar JSON no corpo das requisições
 app.use(express.urlencoded({ extended: true })); // Processar dados enviados via formulário
 
 // Middleware de Autenticação
+/**
+ * Middleware de autenticação que verifica se o token de autorização é válido.
+ * Para rotas protegidas, é necessário enviar um cabeçalho "Authorization" com um token válido.
+ */
 const authenticate = (req, res, next) => {
   const token = req.headers["authorization"];
   const validTokens = ["SEU_TOKEN_SEGURO"]; // Lista de tokens válidos
@@ -34,7 +38,7 @@ const authenticate = (req, res, next) => {
 
   if (validTokens.includes(token)) {
     console.log(`[${new Date().toISOString()}] Autenticação bem-sucedida para ${req.method} ${req.url}`);
-    next();
+    next(); // Permitir o acesso à rota
   } else {
     console.error(`[${new Date().toISOString()}] Erro de autenticação: Token inválido para ${req.method} ${req.url}`);
     res.status(401).json({ error: "Unauthorized: Invalid token" });
@@ -47,17 +51,17 @@ const deployRoutes = require("./routes/deploy");
 const analyticsRoutes = require("./routes/analytics");
 
 // Aplicar autenticação apenas em rotas sensíveis
-app.use("/deploy", authenticate);
-app.use("/config", configRoutes);
-app.use("/analytics", analyticsRoutes);
+app.use("/deploy", authenticate); // Protege apenas as rotas de deploy
+app.use("/config", configRoutes); // Rotas de configuração
+app.use("/analytics", analyticsRoutes); // Rotas de analytics
 
 // Iniciar o Servidor
 app.listen(PORT, () => {
   console.log(`Activity Provider is running on ${BASE_URL}`);
   console.log("Rotas Registradas:");
-  console.log(listEndpoints(app));
+  console.log(listEndpoints(app)); // Listar todas as rotas registradas
 });
 
 // Importa o Swagger após o restante das configurações
-require("./swagger")(app);
+require("./swagger")(app); // Configura a documentação Swagger
 console.log(`Swagger docs available at ${BASE_URL}/api-docs`);

@@ -40,6 +40,10 @@ router.get("/", (req, res) => {
 
           <button type="submit">Enviar</button>
         </form>
+        <p>Para abrir o link Analytics, usar: <a href="https://retail4everyone.onrender.com/analytics" target="_blank">Analytics</a></p>
+        <p>Para abrir o link Deploy, usar: <a href="https://retail4everyone.onrender.com/deploy" target="_blank">Deploy</a></p>
+        <p>Para abrir o link da lista Analytics: <a href="https://retail4everyone.onrender.com/analytics/list" target="_blank">Analytics List</a></p>
+        <p>Para abrir o link da Documentação: <a href="https://retail4everyone.onrender.com/api-docs/#/" target="_blank">Documentação</a></p>
       </body>
     </html>
   `);
@@ -78,7 +82,11 @@ router.post("/", (req, res) => {
         <form action="/config" method="GET">
           <button type="submit">Reiniciar Formulário</button>
         </form>
-      </body>
+        <p>Para abrir o link Analytics, usar: <a href="https://retail4everyone.onrender.com/analytics" target="_blank">Analytics</a></p>
+        <p>Para abrir o link Deploy, usar: <a href="https://retail4everyone.onrender.com/deploy" target="_blank">Deploy</a></p>
+        <p>Para abrir o link da lista Analytics: <a href="https://retail4everyone.onrender.com/analytics/list" target="_blank">Analytics List</a></p>
+        <p>Para abrir o link da Documentação: <a href="https://retail4everyone.onrender.com/api-docs/#/" target="_blank">Documentação</a></p>
+        </body>
     </html>
   `);
 });
@@ -103,6 +111,10 @@ router.post("/edit", (req, res) => {
         <form action="/config" method="GET">
           <button type="submit">Reiniciar Formulário</button>
         </form>
+        <p>Para abrir o link Analytics, usar: <a href="https://retail4everyone.onrender.com/analytics" target="_blank">Analytics</a></p>
+        <p>Para abrir o link Deploy, usar: <a href="https://retail4everyone.onrender.com/deploy" target="_blank">Deploy</a></p>
+        <p>Para abrir o link da lista Analytics: <a href="https://retail4everyone.onrender.com/analytics/list" target="_blank">Analytics List</a></p>
+        <p>Para abrir o link da Documentação: <a href="https://retail4everyone.onrender.com/api-docs/#/" target="_blank">Documentação</a></p>
       </body>
     </html>
   `);
