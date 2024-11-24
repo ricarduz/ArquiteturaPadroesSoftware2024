@@ -46,6 +46,8 @@ router.get("/", (req, res) => {
 
           <button type="submit">Enviar</button>
         </form>
+        <p>Para abrir o link onde o repositório está guardado, usar: <a href="https://github.com/ricarduz/ArquiteturaPadroesSoftware2024" target="_blank">GitHub</a></p>
+        <p>Para abrir o link onde o API está a correr, usar: <a href="https://retail4everyone.onrender.com" target="_blank">Render</a></p>  
         <p>Para abrir o link Analytics, usar: <a href="https://retail4everyone.onrender.com/analytics" target="_blank">Analytics</a></p>
         <p>Para abrir o link Deploy, usar: <a href="https://retail4everyone.onrender.com/deploy" target="_blank">Deploy</a></p>
         <p>Para abrir o link da lista Analytics: <a href="https://retail4everyone.onrender.com/analytics/list" target="_blank">Analytics List</a></p>
@@ -88,6 +90,8 @@ router.post("/", (req, res) => {
         <form action="/config" method="GET">
           <button type="submit">Reiniciar Formulário</button>
         </form>
+        <p>Para abrir o link onde o repositório está guardado, usar: <a href="https://github.com/ricarduz/ArquiteturaPadroesSoftware2024" target="_blank">GitHub</a></p>
+        <p>Para abrir o link onde o API está a correr, usar: <a href="https://retail4everyone.onrender.com" target="_blank">Render</a></p>  
         <p>Para abrir o link Analytics, usar: <a href="https://retail4everyone.onrender.com/analytics" target="_blank">Analytics</a></p>
         <p>Para abrir o link Deploy, usar: <a href="https://retail4everyone.onrender.com/deploy" target="_blank">Deploy</a></p>
         <p>Para abrir o link da lista Analytics: <a href="https://retail4everyone.onrender.com/analytics/list" target="_blank">Analytics List</a></p>
@@ -117,6 +121,8 @@ router.post("/edit", (req, res) => {
         <form action="/config" method="GET">
           <button type="submit">Reiniciar Formulário</button>
         </form>
+        <p>Para abrir o link onde o repositório está guardado, usar: <a href="https://github.com/ricarduz/ArquiteturaPadroesSoftware2024" target="_blank">GitHub</a></p>
+        <p>Para abrir o link onde o API está a correr, usar: <a href="https://retail4everyone.onrender.com" target="_blank">Render</a></p>  
         <p>Para abrir o link Analytics, usar: <a href="https://retail4everyone.onrender.com/analytics" target="_blank">Analytics</a></p>
         <p>Para abrir o link Deploy, usar: <a href="https://retail4everyone.onrender.com/deploy" target="_blank">Deploy</a></p>
         <p>Para abrir o link da lista Analytics: <a href="https://retail4everyone.onrender.com/analytics/list" target="_blank">Analytics List</a></p>
