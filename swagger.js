@@ -1,3 +1,9 @@
+/**
+ * Autor: Ricardo Isaias Serafim
+ * Email: 2302605@estudante.uab.pt
+ * Descrição: Configuração do Swagger para geração de documentação da API.
+ */
+
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 

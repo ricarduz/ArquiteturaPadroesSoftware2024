@@ -1,3 +1,9 @@
+/**
+ * Autor: Ricardo Isaias Serafim
+ * Email: 2302605@estudante.uab.pt
+ * Descrição: Arquivo principal do servidor da API.
+ */
+
 require("dotenv").config(); // Carregar variáveis de ambiente do arquivo .env
 const express = require("express");
 const morgan = require("morgan");

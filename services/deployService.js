@@ -1,6 +1,8 @@
 /**
+ * Autor: Ricardo Isaias Serafim
+ * Email: 2302605@estudante.uab.pt
+ * Descrição: Serviço responsável por gerar URLs dinâmicas.
  * Classe URLFactory
- * Responsável por criar URLs dinâmicas para instâncias de simulação e outros serviços relacionados.
  */
 class URLFactory {
     /**

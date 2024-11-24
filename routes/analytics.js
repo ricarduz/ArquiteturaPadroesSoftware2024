@@ -1,3 +1,9 @@
+/**
+ * Autor: Ricardo Isaias Serafim
+ * Email: 2302605@estudante.uab.pt
+ * Descrição: Rotas relacionadas à coleta e exibição de dados analíticos.
+ */
+
 const express = require("express");
 const router = express.Router();
 
