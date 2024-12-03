@@ -52,8 +52,6 @@ router.get("/", (req, res) => {
         <p>Para abrir o link Deploy, usar: <a href="https://retail4everyone.onrender.com/deploy" target="_blank">Deploy</a></p>
         <p>Para abrir o link da lista Analytics: <a href="https://retail4everyone.onrender.com/analytics/list" target="_blank">Analytics List</a></p>
         <p>Para abrir o link da Documentação: <a href="https://retail4everyone.onrender.com/api-docs/#/" target="_blank">Documentação</a></p>
-        <p>Para abrir o link do Criador Gestão de Stock: <a href="https://retail4everyone.onrender.com/gestaodestock" target="_blank">Gestão de Stock</a></p>
-        <p>Para abrir o link do Criador Organização de Prateleiras: <a href="https://retail4everyone.onrender.com/organizacaoprateleiras" target="_blank">Organização de Prateleiras</a></p>
       </body>
     </html>
   `);
@@ -92,9 +90,56 @@ router.post("/", (req, res) => {
         <form action="/config" method="GET">
           <button type="submit">Reiniciar Formulário</button>
         </form>
-        <p>Para abrir o link do Criador Gestão de Stock: <a href="https://retail4everyone.onrender.com/gestaodestock" target="_blank">Gestão de Stockk</a></p>
-        <p>Para abrir o link do Criador Organização de Prateleiras: <a href="https://retail4everyone.onrender.com/organizacaoprateleiras" target="_blank">Organização de Prateleiras</a></p>
+        <p>Para abrir o link onde o repositório está guardado, usar: <a href="https://github.com/ricarduz/ArquiteturaPadroesSoftware2024" target="_blank">GitHub</a></p>
+        <p>Para abrir o link onde o API está a correr, usar: <a href="https://retail4everyone.onrender.com" target="_blank">Render</a></p>  
+        <p>Para abrir o link Analytics, usar: <a href="https://retail4everyone.onrender.com/analytics" target="_blank">Analytics</a></p>
+        <p>Para abrir o link Deploy, usar: <a href="https://retail4everyone.onrender.com/deploy" target="_blank">Deploy</a></p>
+        <p>Para abrir o link da lista Analytics: <a href="https://retail4everyone.onrender.com/analytics/list" target="_blank">Analytics List</a></p>
+        <p>Para abrir o link da Documentação: <a href="https://retail4everyone.onrender.com/api-docs/#/" target="_blank">Documentação</a></p>
+        </body>
+    </html>
+  `);
+});
+
+// POST /config/edit - Processa as correções
+router.post("/edit", (req, res) => {
+  const { error } = configSchema.validate(req.body);
+  if (error) {
+    return res.status(400).send(`<h3 style="color: red;">Erro: ${error.details[0].message}</h3>`);
+  }
+
+  submittedData = req.body;
+
+  res.send(`
+    <html>
+      <body>
+        <h2>Dados Corrigidos:</h2>
+        <p>Nível de Stock Inicial: ${submittedData.nivel_stock_inicial}</p>
+        <p>Objetivo de Vendas: ${submittedData.objetivo_vendas}</p>
+        <p>Duração da Campanha: ${submittedData.duracao_campanha}</p>
+        <p>Descrição do Cenário: ${submittedData.descricao_cenario}</p>
+        <form action="/config" method="GET">
+          <button type="submit">Reiniciar Formulário</button>
+        </form>
+        <p>Para abrir o link onde o repositório está guardado, usar: <a href="https://github.com/ricarduz/ArquiteturaPadroesSoftware2024" target="_blank">GitHub</a></p>
+        <p>Para abrir o link onde o API está a correr, usar: <a href="https://retail4everyone.onrender.com" target="_blank">Render</a></p>  
+        <p>Para abrir o link Analytics, usar: <a href="https://retail4everyone.onrender.com/analytics" target="_blank">Analytics</a></p>
+        <p>Para abrir o link Deploy, usar: <a href="https://retail4everyone.onrender.com/deploy" target="_blank">Deploy</a></p>
+        <p>Para abrir o link da lista Analytics: <a href="https://retail4everyone.onrender.com/analytics/list" target="_blank">Analytics List</a></p>
+        <p>Para abrir o link da Documentação: <a href="https://retail4everyone.onrender.com/api-docs/#/" target="_blank">Documentação</a></p>
       </body>
     </html>
   `);
 });
+
+// GET /config/json_params_url
+router.get("/json_params_url", (req, res) => {
+  res.json([
+    { name: "nivel_stock_inicial", type: "integer" },
+    { name: "objetivo_vendas", type: "integer" },
+    { name: "duracao_campanha", type: "integer" },
+    { name: "descricao_cenario", type: "text/plain" },
+  ]);
+});
+
+module.exports = router;
