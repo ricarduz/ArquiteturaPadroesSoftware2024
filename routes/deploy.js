@@ -1,23 +1,21 @@
 /**
  * Autor: Ricardo Isaias Serafim
  * Email: 2302605@estudante.uab.pt
- * Descrição: Rotas relacionadas à criação de deploys para simulações.
+ * Descrição: Rotas relacionadas à criação de deploys para simulações, utilizando o padrão Factory Method.
  */
 
 const express = require("express");
 const router = express.Router();
 const Joi = require("joi");
+const GestaoDeStockFactory = require("../models/GestaoDeStockFactory");
+const OrganizacaoDePrateleirasFactory = require("../models/OrganizacaoDePrateleirasFactory");
 
 // Esquema de validação com Joi
 const deploySchema = Joi.object({
-  activityID: Joi.string().required(),
-  InvenRAstdID: Joi.string().required(),
-  json_params: Joi.object({
-    nivel_stock_inicial: Joi.number().required(),
-    objetivo_vendas: Joi.number().required(),
-    duracao_campanha: Joi.number().required(),
-    descricao_cenario: Joi.string().required(),
-  }).required(),
+  activityType: Joi.string().required(),
+  name: Joi.string().required(),
+  description: Joi.string().required(),
+  params: Joi.object().required(),
 });
 
 // Middleware para validação de dados
@@ -37,40 +35,36 @@ const validateDeployData = (req, res, next) => {
  *     Deployment:
  *       type: object
  *       required:
- *         - activityID
- *         - InvenRAstdID
- *         - json_params
+ *         - activityType
+ *         - name
+ *         - description
+ *         - params
  *       properties:
- *         activityID:
+ *         activityType:
  *           type: string
- *           description: ID único da atividade
- *         InvenRAstdID:
+ *           description: Tipo da atividade (GestaoDeStock ou OrganizacaoDePrateleiras)
+ *         name:
  *           type: string
- *           description: ID do padrão InvenRA
- *         json_params:
+ *           description: Nome da atividade
+ *         description:
+ *           type: string
+ *           description: Descrição da atividade
+ *         params:
  *           type: object
- *           description: Parâmetros da configuração
+ *           description: Parâmetros específicos da atividade
  *           properties:
- *             nivel_stock_inicial:
+ *             stockLevel:
  *               type: number
- *               description: Nível inicial de estoque
- *             objetivo_vendas:
- *               type: number
- *               description: Meta de vendas
- *             duracao_campanha:
- *               type: number
- *               description: Duração da campanha em dias
- *             descricao_cenario:
+ *               description: Nível de stock (para GestaoDeStock)
+ *             shelfLayout:
  *               type: string
- *               description: Descrição do cenário
+ *               description: Layout das prateleiras (para OrganizacaoDePrateleiras)
  *       example:
- *         activityID: "123"
- *         InvenRAstdID: "gestor001"
- *         json_params:
- *           nivel_stock_inicial: 100
- *           objetivo_vendas: 200
- *           duracao_campanha: 7
- *           descricao_cenario: "Campanha de exemplo"
+ *         activityType: "GestaoDeStock"
+ *         name: "Gestão de Stock"
+ *         description: "Atividade para gerenciar níveis de stock"
+ *         params:
+ *           stockLevel: 100
  */
 
 /**
@@ -91,7 +85,7 @@ const validateDeployData = (req, res, next) => {
  * @swagger
  * /deploy:
  *   post:
- *     summary: Cria uma nova instância de simulação
+ *     summary: Cria uma nova instância de atividade
  *     requestBody:
  *       required: true
  *       content:
@@ -100,15 +94,15 @@ const validateDeployData = (req, res, next) => {
  *             $ref: '#/components/schemas/Deployment'
  *     responses:
  *       200:
- *         description: URL da instância criada
+ *         description: Detalhes da atividade criada
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 activity_url:
- *                   type: string
- *                   description: URL da simulação criada
+ *                 activityDetails:
+ *                   type: object
+ *                   description: Detalhes da atividade criada
  *       400:
  *         description: Erro de validação
  *         content:
@@ -132,12 +126,40 @@ router.get("/", (req, res) => {
 router.post("/", validateDeployData, (req, res) => {
   console.log("Request Body Recebido:", req.body);
 
-  // Dados validados
-  const { activityID } = req.body;
+  const { activityType, name, description, params } = req.body;
 
-  // Resposta com o URL de instância
-  const instanceURL = `http://localhost:3000/simulation/${activityID}`;
-  res.json({ activity_url: instanceURL });
+  let activity;
+  try {
+    // Usar o Factory Method para criar a atividade
+    switch (activityType) {
+      case "GestaoDeStock":
+        const gestaoFactory = new GestaoDeStockFactory();
+        activity = gestaoFactory.createActivity({
+          name,
+          description,
+          stockLevel: params.stockLevel,
+        });
+        break;
+
+      case "OrganizacaoDePrateleiras":
+        const organizacaoFactory = new OrganizacaoDePrateleirasFactory();
+        activity = organizacaoFactory.createActivity({
+          name,
+          description,
+          shelfLayout: params.shelfLayout,
+        });
+        break;
+
+      default:
+        return res.status(400).json({ error: `Unknown activity type: ${activityType}` });
+    }
+
+    // Retornar os detalhes da atividade criada
+    res.status(200).json({ activityDetails: activity.getDetails() });
+  } catch (error) {
+    console.error("Error creating activity:", error.message);
+    res.status(500).json({ error: "Failed to create activity" });
+  }
 });
 
 module.exports = router;
