@@ -18,7 +18,7 @@ const router = express.Router();
  *       properties:
  *         activityID:
  *           type: string
- *           description: ID da atividade para a qual os dados analíticos são requisitados
+ *           description: "ID da atividade para a qual os dados analíticos são requisitados"
  *       example:
  *         activityID: "123"
  *     AnalyticsResponse:
@@ -26,10 +26,10 @@ const router = express.Router();
  *       properties:
  *         activityID:
  *           type: string
- *           description: ID da atividade
+ *           description: "ID da atividade"
  *         inveniraStdID:
  *           type: string
- *           description: ID padrão da Inven!RA
+ *           description: "ID padrão da Inven!RA"
  *         quantAnalytics:
  *           type: array
  *           items:
@@ -37,10 +37,10 @@ const router = express.Router();
  *             properties:
  *               name:
  *                 type: string
- *                 description: Nome da métrica quantitativa
+ *                 description: "Nome da métrica quantitativa"
  *               value:
  *                 type: number
- *                 description: Valor da métrica quantitativa
+ *                 description: "Valor da métrica quantitativa"
  *         qualAnalytics:
  *           type: array
  *           items:
@@ -48,10 +48,10 @@ const router = express.Router();
  *             properties:
  *               name:
  *                 type: string
- *                 description: Nome da métrica qualitativa
+ *                 description: "Nome da métrica qualitativa"
  *               value:
  *                 type: string
- *                 description: Valor da métrica qualitativa
+ *                 description: "Valor da métrica qualitativa"
  *       example:
  *         activityID: "123"
  *         inveniraStdID: "gestor001"
@@ -72,7 +72,7 @@ const router = express.Router();
  *     summary: Lista os tipos de métricas disponíveis
  *     responses:
  *       200:
- *         description: Retorna uma lista das métricas qualitativas e quantitativas disponíveis
+ *         description: "Retorna uma lista das métricas qualitativas e quantitativas disponíveis"
  *         content:
  *           application/json:
  *             schema:
@@ -85,10 +85,10 @@ const router = express.Router();
  *                     properties:
  *                       name:
  *                         type: string
- *                         description: Nome da métrica qualitativa
+ *                         description: "Nome da métrica qualitativa"
  *                       type:
  *                         type: string
- *                         description: Tipo de dado (ex.: text/plain)
+ *                         description: "Tipo de dado (ex.: text/plain)"
  *                 quantAnalytics:
  *                   type: array
  *                   items:
@@ -96,10 +96,10 @@ const router = express.Router();
  *                     properties:
  *                       name:
  *                         type: string
- *                         description: Nome da métrica quantitativa
+ *                         description: "Nome da métrica quantitativa"
  *                       type:
  *                         type: string
- *                         description: Tipo de dado (ex.: integer)
+ *                         description: "Tipo de dado (ex.: integer)"
  */
 
 /**
@@ -109,7 +109,7 @@ const router = express.Router();
  *     summary: Verifica o funcionamento do endpoint de Analytics
  *     responses:
  *       200:
- *         description: Mensagem indicando o funcionamento do endpoint
+ *         description: "Mensagem indicando o funcionamento do endpoint"
  *         content:
  *           text/plain:
  *             schema:
@@ -129,7 +129,7 @@ const router = express.Router();
  *             $ref: '#/components/schemas/AnalyticsRequest'
  *     responses:
  *       200:
- *         description: Dados analíticos simulados para o activityID fornecido
+ *         description: "Dados analíticos simulados para o activityID fornecido"
  *         content:
  *           application/json:
  *             schema:
@@ -137,7 +137,7 @@ const router = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/AnalyticsResponse'
  *       400:
- *         description: Erro de validação - activityID ausente
+ *         description: "Erro de validação - activityID ausente"
  *         content:
  *           application/json:
  *             schema:
@@ -145,7 +145,7 @@ const router = express.Router();
  *               properties:
  *                 error:
  *                   type: string
- *                   description: Mensagem de erro
+ *                   description: "Mensagem de erro"
  */
 
 // Dados Mock para Analytics

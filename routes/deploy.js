@@ -12,7 +12,7 @@ const OrganizacaoDePrateleirasFactory = require("../models/OrganizacaoDePratelei
 
 // Esquema de validação com Joi
 const deploySchema = Joi.object({
-  activityType: Joi.string().required(),
+  activityType: Joi.string().valid("GestaoDeStock", "OrganizacaoDePrateleiras").required(),
   name: Joi.string().required(),
   description: Joi.string().required(),
   params: Joi.object().required(),
@@ -25,7 +25,7 @@ const validateDeployData = (req, res, next) => {
     console.error("Erro de Validação:", error.details[0].message);
     return res.status(400).json({ error: `Validation Error: ${error.details[0].message}` });
   }
-  next(); // Continua para o próximo middleware ou controlador
+  next();
 };
 
 /**
@@ -157,8 +157,8 @@ router.post("/", validateDeployData, (req, res) => {
     // Retornar os detalhes da atividade criada
     res.status(200).json({ activityDetails: activity.getDetails() });
   } catch (error) {
-    console.error("Error creating activity:", error.message);
-    res.status(500).json({ error: "Failed to create activity" });
+    console.error("Erro ao criar atividade:", error.message);
+    res.status(500).json({ error: "Erro interno ao criar atividade. Tente novamente mais tarde." });
   }
 });
 

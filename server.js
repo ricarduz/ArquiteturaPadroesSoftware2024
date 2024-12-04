@@ -7,10 +7,10 @@
 require("dotenv").config(); // Carregar variáveis de ambiente do arquivo .env
 const express = require("express");
 const morgan = require("morgan");
-const listEndpoints = require("express-list-endpoints");
 const cors = require("cors");
+const listEndpoints = require("express-list-endpoints");
+const app = require("./app"); // Importa a configuração do `app.js`
 
-const app = express();
 const PORT = process.env.PORT || 3000; // Porta definida nas variáveis de ambiente ou 3000 como padrão
 const BASE_URL = process.env.BASE_URL || "http://localhost:3000"; // URL base definida no .env ou localhost
 
@@ -18,56 +18,30 @@ const BASE_URL = process.env.BASE_URL || "http://localhost:3000"; // URL base de
 app.use(morgan("combined")); // Logs detalhados no terminal para monitorar requisições
 app.use(cors({ origin: "*" })); // Permitir todos os domínios (para produção, ajuste para restringir)
 
-// Middleware para Log de Requisições
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
-});
-
-// Middleware para Processamento de Requisições
-app.use(express.json()); // Processar JSON no corpo das requisições
-app.use(express.urlencoded({ extended: true })); // Processar dados enviados via formulário
-
-// Middleware de Autenticação
-/**
- * Middleware de autenticação que verifica se o token de autorização é válido.
- * Para rotas protegidas, é necessário enviar um cabeçalho "Authorization" com um token válido.
- */
-const authenticate = (req, res, next) => {
-  const token = req.headers["authorization"];
-  const validTokens = ["SEU_TOKEN_SEGURO"]; // Lista de tokens válidos
-
-  if (!token) {
-    console.warn(`[${new Date().toISOString()}] Tentativa de acesso sem token.`);
-    return res.status(401).json({ error: "Unauthorized: No token provided" });
-  }
-
-  if (validTokens.includes(token)) {
-    console.log(`[${new Date().toISOString()}] Autenticação bem-sucedida para ${req.method} ${req.url}`);
-    next(); // Permitir o acesso à rota
-  } else {
-    console.error(`[${new Date().toISOString()}] Erro de autenticação: Token inválido para ${req.method} ${req.url}`);
-    res.status(401).json({ error: "Unauthorized: Invalid token" });
-  }
-};
-
-// Rotas
+// Rotas específicas
 const configRoutes = require("./routes/config");
 const deployRoutes = require("./routes/deploy");
 const analyticsRoutes = require("./routes/analytics");
+const { router: GestaoDeStockRouter } = require("./models/GestaoDeStockFactory");
+const { router: OrganizacaoDePrateleirasRouter } = require("./models/OrganizacaoDePrateleirasFactory");
 
-// Aplicar autenticação apenas em rotas sensíveis
-app.use("/deploy", authenticate); // Protege apenas as rotas de deploy
-app.use("/config", configRoutes); // Rotas de configuração
-app.use("/analytics", analyticsRoutes); // Rotas de analytics
+// Registrar rotas
+app.use("/config", configRoutes);
+app.use("/deploy", deployRoutes);
+app.use("/analytics", analyticsRoutes);
+app.use("/gestaodestock", GestaoDeStockRouter);
+app.use("/organizacaoprateleiras", OrganizacaoDePrateleirasRouter);
 
-// Iniciar o Servidor
-app.listen(PORT, () => {
-  console.log(`Activity Provider is running on ${BASE_URL}`);
-  console.log("Rotas Registradas:");
-  console.log(listEndpoints(app)); // Listar todas as rotas registradas
-});
-
-// Importa o Swagger após o restante das configurações
+// Configuração Swagger
 require("./swagger")(app); // Configura a documentação Swagger
 console.log(`Swagger docs available at ${BASE_URL}/api-docs`);
+
+// Inicialização do servidor
+app.listen(PORT, () => {
+  console.log("============================================");
+  console.log(`🚀 Activity Provider is running on ${BASE_URL}`);
+  console.log(`📋 Swagger docs available at ${BASE_URL}/api-docs`);
+  console.log("🌐 Endpoints disponíveis:");
+  console.log(listEndpoints(app)); // Lista rotas registradas
+  console.log("============================================");
+});
