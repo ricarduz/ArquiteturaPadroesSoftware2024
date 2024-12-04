@@ -5,8 +5,8 @@
  */
 
 // Importação dos módulos necessários
-const GestaoDeStockFactory = require("./models/GestaoDeStockFactory");
-const OrganizacaoDePrateleirasFactory = require("./models/OrganizacaoDePrateleirasFactory");
+const { GestaoDeStockFactory } = require("./models/GestaoDeStockFactory");
+const { OrganizacaoDePrateleirasFactory } = require("./models/OrganizacaoDePrateleirasFactory");
 const GestaoDeStock = require("./models/GestaoDeStock");
 const OrganizacaoDePrateleiras = require("./models/OrganizacaoDePrateleiras");
 
@@ -16,7 +16,7 @@ console.log("===== Testando Produtos Concretos =====");
 const atividadeStock = new GestaoDeStock(
   "Gestão de Stocks",
   "Atividade para gerenciar o stock inicial.",
-  100
+  100 // Nível inicial de stock
 );
 console.log("\nDetalhes da Gestão de Stocks:");
 console.log(atividadeStock.getDetails());
@@ -26,7 +26,7 @@ atividadeStock.execute();
 const atividadePrateleiras = new OrganizacaoDePrateleiras(
   "Organização de Prateleiras",
   "Atividade para otimizar o layout das prateleiras.",
-  "Layout Inicial"
+  "Layout Inicial" // Layout inicial das prateleiras
 );
 console.log("\nDetalhes da Organização de Prateleiras:");
 console.log(atividadePrateleiras.getDetails());
@@ -39,7 +39,7 @@ const gestaoFactory = new GestaoDeStockFactory();
 const atividadeStockCriada = gestaoFactory.createActivity({
   name: "Gestão de Stock Avançada",
   description: "Gerenciamento avançado de Stocks.",
-  stockLevel: 200, // Parâmetro necessário
+  stockLevel: 200, // Nível inicial de stock
 });
 console.log("\nAtividade Criada - Gestão de Stocks:");
 console.log(atividadeStockCriada.getDetails());
@@ -50,7 +50,7 @@ const organizacaoFactory = new OrganizacaoDePrateleirasFactory();
 const atividadePrateleirasCriada = organizacaoFactory.createActivity({
   name: "Reorganização de Prateleiras",
   description: "Redefinição do layout para otimização.",
-  shelfLayout: "Layout Atualizado", // Parâmetro necessário
+  shelfLayout: "Layout Atualizado", // Layout atualizado das prateleiras
 });
 console.log("\nAtividade Criada - Organização de Prateleiras:");
 console.log(atividadePrateleirasCriada.getDetails());

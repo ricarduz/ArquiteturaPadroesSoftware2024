@@ -4,13 +4,13 @@
  * Descrição: Criador Concreto - implementa a criação de atividades para Organização de Prateleiras.
  */
 
+// Importação das dependências
 const ActivityFactory = require("./ActivityFactory");
 const OrganizacaoDePrateleiras = require("./OrganizacaoDePrateleiras");
+const express = require("express"); // Para definir rotas específicas do módulo
+const router = express.Router(); // Criação do roteador para endpoints relacionados
 
-// Importação do Express para definir a rota de funcionamento
-const express = require("express");
-const router = express.Router();
-
+// Definição da classe concreta que extende a ActivityFactory
 class OrganizacaoDePrateleirasFactory extends ActivityFactory {
   /**
    * Cria uma nova atividade de Organização de Prateleiras.
@@ -42,18 +42,33 @@ router.get("/", (req, res) => {
 
 // Rota para criar uma nova atividade via POST
 router.post("/", (req, res) => {
+  // Validação dos campos enviados no corpo da requisição
   const { name, description, shelfLayout } = req.body;
+
   if (!name || !description || !shelfLayout) {
-    return res.status(400).json({ error: "Todos os campos são obrigatórios: name, description, shelfLayout." });
+    return res.status(400).json({
+      error: "Todos os campos são obrigatórios: name, description, shelfLayout.",
+    });
   }
 
-  const factory = new OrganizacaoDePrateleirasFactory();
-  const activity = factory.createActivity({ name, description, shelfLayout });
+  try {
+    // Instância do factory para criar a atividade
+    const factory = new OrganizacaoDePrateleirasFactory();
+    const activity = factory.createActivity({ name, description, shelfLayout });
 
-  res.status(201).json({
-    message: "Atividade de Organização de Prateleiras criada com sucesso!",
-    activity: activity.getDetails(),
-  });
+    // Resposta de sucesso com os detalhes da atividade criada
+    res.status(201).json({
+      message: "Atividade de Organização de Prateleiras criada com sucesso!",
+      activity: activity.getDetails(),
+    });
+  } catch (error) {
+    // Resposta de erro caso ocorra algum problema
+    res.status(500).json({
+      error: "Erro ao criar a atividade de Organização de Prateleiras.",
+      details: error.message,
+    });
+  }
 });
 
+// Exportação da classe e do roteador
 module.exports = { OrganizacaoDePrateleirasFactory, router };

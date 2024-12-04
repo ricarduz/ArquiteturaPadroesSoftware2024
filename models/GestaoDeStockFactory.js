@@ -12,6 +12,14 @@ const express = require("express");
 const router = express.Router();
 
 class GestaoDeStockFactory extends ActivityFactory {
+  /**
+   * Método responsável pela criação de uma nova atividade de Gestão de Stock.
+   * @param {Object} params - Parâmetros necessários para criar a atividade.
+   * @param {string} params.name - Nome da atividade.
+   * @param {string} params.description - Descrição da atividade.
+   * @param {number} params.stockLevel - Nível inicial de stock.
+   * @returns {GestaoDeStock} - Instância da atividade de Gestão de Stock.
+   */
   createActivity({ name, description, stockLevel }) {
     return new GestaoDeStock(name, description, stockLevel);
   }
