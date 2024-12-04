@@ -56,10 +56,18 @@ const configRoutes = require("./routes/config");
 const deployRoutes = require("./routes/deploy");
 const analyticsRoutes = require("./routes/analytics");
 
+// Rotas para Criadores de Atividades
+const { router: gestaoDeStockRouter } = require("./models/GestaoDeStockFactory");
+const { router: organizacaoDePrateleirasRouter } = require("./models/OrganizacaoDePrateleirasFactory");
+
 // Aplicar autenticação apenas em rotas sensíveis
 app.use("/deploy", authenticate); // Protege apenas as rotas de deploy
 app.use("/config", configRoutes); // Rotas de configuração
 app.use("/analytics", analyticsRoutes); // Rotas de analytics
+
+// Adicionar rotas para criadores
+app.use("/gestaodestock", gestaoDeStockRouter); // Rota para Gestão de Stock
+app.use("/organizacaoprateleiras", organizacaoDePrateleirasRouter); // Rota para Organização de Prateleiras
 
 // Iniciar o Servidor
 app.listen(PORT, () => {
