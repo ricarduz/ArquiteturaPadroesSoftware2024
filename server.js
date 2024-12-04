@@ -61,7 +61,7 @@ const { router: gestaoDeStockRouter } = require("./models/GestaoDeStockFactory")
 const { router: organizacaoDePrateleirasRouter } = require("./models/OrganizacaoDePrateleirasFactory");
 
 // Rotas para Testes
-const testsRouter = require("./tests");
+const testRouter = require("./test");
 
 // Aplicar autenticação apenas em rotas sensíveis
 app.use("/deploy", authenticate); // Protege apenas as rotas de deploy
@@ -73,7 +73,7 @@ app.use("/gestaodestock", gestaoDeStockRouter); // Rota para Gestão de Stock
 app.use("/organizacaoprateleiras", organizacaoDePrateleirasRouter); // Rota para Organização de Prateleiras
 
 // Adicionar rotas de testes
-app.use("/tests", testsRouter); // Rotas para testes
+app.use("/test", testRouter); // Rotas para testes
 
 // Iniciar o Servidor
 app.listen(PORT, () => {
