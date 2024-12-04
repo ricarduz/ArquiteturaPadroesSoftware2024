@@ -57,8 +57,8 @@ const deployRoutes = require("./routes/deploy");
 const analyticsRoutes = require("./routes/analytics");
 
 // Rotas para Criadores de Atividades
-const { router: gestaoDeStockRouter } = require("./models/GestaoDeStockFactory");
-const { router: organizacaoDePrateleirasRouter } = require("./models/OrganizacaoDePrateleirasFactory");
+const { router: GestaoDeStockRouter } = require("./models/GestaoDeStockFactory");
+const { router: OrganizacaoDePrateleirasRouter } = require("./models/OrganizacaoDePrateleirasFactory");
 
 // Rotas para Testes
 const testRouter = require("./test");
@@ -69,8 +69,8 @@ app.use("/config", configRoutes); // Rotas de configuração
 app.use("/analytics", analyticsRoutes); // Rotas de analytics
 
 // Adicionar rotas para criadores
-app.use("/gestaodestock", gestaoDeStockRouter); // Rota para Gestão de Stock
-app.use("/organizacaoprateleiras", organizacaoDePrateleirasRouter); // Rota para Organização de Prateleiras
+app.use("/gestaodestock", GestaoDeStockRouter); // Rota para Gestão de Stock
+app.use("/organizacaoprateleiras", OrganizacaoDePrateleirasRouter); // Rota para Organização de Prateleiras
 
 // Adicionar rotas de testes
 app.use("/test", testRouter); // Rotas para testes
