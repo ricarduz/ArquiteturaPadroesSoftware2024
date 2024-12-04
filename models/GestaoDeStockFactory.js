@@ -4,39 +4,60 @@
  * Descrição: Criador Concreto - implementa a criação de atividades para Gestão de Stock.
  */
 
+const express = require("express");
 const ActivityFactory = require("./ActivityFactory");
 const GestaoDeStock = require("./GestaoDeStock");
 
-// Importação do Express para definir a rota de funcionamento
-const express = require("express");
 const router = express.Router();
 
 class GestaoDeStockFactory extends ActivityFactory {
   /**
-   * Método responsável pela criação de uma nova atividade de Gestão de Stock.
-   * @param {Object} params - Parâmetros necessários para criar a atividade.
+   * Cria uma nova atividade de Gestão de Stocks.
+   * @param {Object} params - Parâmetros para criar a atividade.
    * @param {string} params.name - Nome da atividade.
    * @param {string} params.description - Descrição da atividade.
    * @param {number} params.stockLevel - Nível inicial de stock.
-   * @returns {GestaoDeStock} - Instância da atividade de Gestão de Stock.
+   * @returns {GestaoDeStock} Nova instância da atividade.
    */
   createActivity({ name, description, stockLevel }) {
     return new GestaoDeStock(name, description, stockLevel);
   }
 }
 
-// Rota para indicar que o endpoint está funcionando
+// Rota principal para verificação do endpoint
 router.get("/", (req, res) => {
   res.send(`
     <html>
       <body>
-        <h2>O Ricardo indica que o endpoint de Gestão de Stock está a funcionar!</h2>
-        <p>Use POST para criar uma nova atividade.</p>
-        <p>Para visualizar os resultados dos testes de Gestão de Stock, clique no link abaixo:</p>
-        <a href="/tests/gestaodestock" target="_blank">Resultados dos Testes - Gestão de Stock</a>
+        <h2>O endpoint de Gestão de Stock está funcionando corretamente!</h2>
+        <p>Use POST para criar uma nova atividade de Gestão de Stock.</p>
       </body>
     </html>
   `);
+});
+
+// Rota para criação de atividades via POST
+router.post("/", (req, res) => {
+  const { name, description, stockLevel } = req.body;
+
+  // Validação dos parâmetros recebidos
+  if (!name || !description || stockLevel === undefined) {
+    return res.status(400).json({
+      error: "Todos os campos são obrigatórios: name, description, stockLevel.",
+    });
+  }
+
+  try {
+    const factory = new GestaoDeStockFactory();
+    const activity = factory.createActivity({ name, description, stockLevel });
+
+    res.status(201).json({
+      message: "Atividade de Gestão de Stock criada com sucesso!",
+      activity: activity.getDetails(),
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao criar a atividade." });
+  }
 });
 
 module.exports = { GestaoDeStockFactory, router };
