@@ -52,8 +52,6 @@ router.get("/", (req, res) => {
         <p>Para abrir o link Deploy, usar: <a href="https://retail4everyone.onrender.com/deploy" target="_blank">Deploy</a></p>
         <p>Para abrir o link da lista Analytics: <a href="https://retail4everyone.onrender.com/analytics/list" target="_blank">Analytics List</a></p>
         <p>Para abrir o link da Documentação: <a href="https://retail4everyone.onrender.com/api-docs/#/" target="_blank">Documentação</a></p>
-        <p>Para abrir o link do Criador Gestão de Stock: <a href="https://retail4everyone.onrender.com/gestaodestock" target="_blank">Gestão de Stock</a></p>
-        <p>Para abrir o link do Criador Organização de Prateleiras: <a href="https://retail4everyone.onrender.com/organizacaoprateleiras" target="_blank">Organização de Prateleiras</a></p>
       </body>
     </html>
   `);
@@ -98,8 +96,6 @@ router.post("/", (req, res) => {
         <p>Para abrir o link Deploy, usar: <a href="https://retail4everyone.onrender.com/deploy" target="_blank">Deploy</a></p>
         <p>Para abrir o link da lista Analytics: <a href="https://retail4everyone.onrender.com/analytics/list" target="_blank">Analytics List</a></p>
         <p>Para abrir o link da Documentação: <a href="https://retail4everyone.onrender.com/api-docs/#/" target="_blank">Documentação</a></p>
-        <p>Para abrir o link do Criador Gestão de Stock: <a href="https://retail4everyone.onrender.com/gestaodestock" target="_blank">Gestão de Stock</a></p>
-        <p>Para abrir o link do Criador Organização de Prateleiras: <a href="https://retail4everyone.onrender.com/organizacaodeprateleiras" target="_blank">Organização de Prateleiras</a></p>
         </body>
     </html>
   `);
