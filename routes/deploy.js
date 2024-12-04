@@ -117,10 +117,16 @@ const validateDeployData = (req, res, next) => {
 
 // GET /deploy
 router.get("/", (req, res) => {
-  res.send(
-    "O Ricardo indica que o endpoint está a funcionar! Use POST para /deploy para criar uma nova instância."
-  );
+  res.send(`
+    <html>
+    <body>
+      <h2>O Ricardo indica que Deploy está a funcionar!</h2>
+      <p>Use POST para /deploy para criar uma nova instância.</p>
+    </body>
+    </html>
+  `);
 });
+
 
 // POST /deploy com validação
 router.post("/", validateDeployData, (req, res) => {

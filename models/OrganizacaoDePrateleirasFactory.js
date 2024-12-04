@@ -35,7 +35,7 @@ router.get("/", (req, res) => {
       <body>
         <h2>O Ricardo indica que o endpoint de Organização de Prateleira está a funcionar!</h2>
         <p>Para abrir os testes realizados, use: 
-          <a href="/tests/index.test" target="_blank">Testes de Organização de Prateleira</a>
+          <a href="/tests" target="_blank">Testes de Organização de Prateleira</a>
         </p>
       </body>
     </html>
@@ -43,4 +43,3 @@ router.get("/", (req, res) => {
 });
 
 module.exports = { OrganizacaoDePrateleirasFactory, router };
-

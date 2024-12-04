@@ -11,12 +11,13 @@ const cors = require("cors");
 const listEndpoints = require("express-list-endpoints");
 const app = require("./app"); // Importa a configuração do `app.js`
 
-const PORT = process.env.PORT || 3000; // Porta definida nas variáveis de ambiente ou 3000 como padrão
-const BASE_URL = process.env.BASE_URL || "http://localhost:3000"; // URL base definida no .env ou localhost
+// Variáveis de ambiente
+const PORT = process.env.PORT || 3000; // Porta definida no .env ou 3000 como padrão
+const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`; // URL base
 
-// Middleware para Logs e CORS
-app.use(morgan("combined")); // Logs detalhados no terminal para monitorar requisições
-app.use(cors({ origin: "*" })); // Permitir todos os domínios (para produção, ajuste para restringir)
+// Middleware global
+app.use(morgan("combined")); // Logs detalhados
+app.use(cors({ origin: "*" })); // Permitir todos os domínios (ajuste em produção)
 
 // Rotas específicas
 const configRoutes = require("./routes/config");

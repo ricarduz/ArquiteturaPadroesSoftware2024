@@ -31,7 +31,7 @@ router.get("/", (req, res) => {
       <body>
         <h2>O Ricardo indica que o endpoint de Gestão de Stocks está a funcionar!</h2>
         <p>Para abrir os testes realizados, use: 
-          <a href="/tests/index.test" target="_blank">Testes de Gestão de Stocks</a>
+          <a href="/tests" target="_blank">Testes de Gestão de Stocks</a>
         </p>
       </body>
     </html>

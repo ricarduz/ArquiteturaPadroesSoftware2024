@@ -191,9 +191,15 @@ router.get("/list", (req, res) => {
 
 // GET /analytics - Endpoint Geral de Informação
 router.get("/", (req, res) => {
-  res.send(
-    "O Ricardo indica que Analytics endpoint está a funcionar! Use /analytics/list ou POST para /analytics para pedidos específicos."
-  );
+  res.send(`
+    <html>
+      <body>
+        <h2>O Ricardo indica que o endpoint de Analytics está a funcionar!</h2>
+        <p>Use /analytics/list ou POST para /analytics para pedidos específicos. 
+        </p>
+      </body>
+    </html>
+  `);
 });
 
 // POST /analytics - Retorna Dados Simulados Baseados no activityID
