@@ -12,15 +12,6 @@ const express = require("express");
 const router = express.Router();
 
 class OrganizacaoDePrateleirasFactory extends ActivityFactory {
-  /**
-   * Cria uma nova atividade de Organização de Prateleiras.
-   * 
-   * @param {Object} params - Parâmetros para a criação da atividade.
-   * @param {string} params.name - Nome da atividade.
-   * @param {string} params.description - Descrição da atividade.
-   * @param {string} params.shelfLayout - Layout inicial das prateleiras.
-   * @returns {OrganizacaoDePrateleiras} Instância de OrganizacaoDePrateleiras.
-   */
   createActivity({ name, description, shelfLayout }) {
     return new OrganizacaoDePrateleiras(name, description, shelfLayout);
   }
@@ -28,9 +19,16 @@ class OrganizacaoDePrateleirasFactory extends ActivityFactory {
 
 // Rota para indicar que o endpoint está funcionando
 router.get("/", (req, res) => {
-  res.send(
-    "O Ricardo indica que o endpoint de Organização de Prateleiras está a funcionar! Use POST para criar uma nova atividade."
-  );
+  res.send(`
+    <html>
+      <body>
+        <h2>O Ricardo indica que o endpoint de Organização de Prateleiras está a funcionar!</h2>
+        <p>Use POST para criar uma nova atividade.</p>
+        <p>Para visualizar os resultados dos testes de Organização de Prateleiras, clique no link abaixo:</p>
+        <a href="/tests/organizacaoprateleiras" target="_blank">Resultados dos Testes - Organização de Prateleiras</a>
+      </body>
+    </html>
+  `);
 });
 
 module.exports = { OrganizacaoDePrateleirasFactory, router };

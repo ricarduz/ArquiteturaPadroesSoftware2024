@@ -13,6 +13,7 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 3000; // Porta definida nas variáveis de ambiente ou 3000 como padrão
 const BASE_URL = process.env.BASE_URL || "http://localhost:3000"; // URL base definida no .env ou localhost
+const VALID_TOKENS = process.env.VALID_TOKENS ? process.env.VALID_TOKENS.split(",") : ["SEU_TOKEN_SEGURO"]; // Lista de tokens válidos
 
 // Middleware para Logs e CORS
 app.use(morgan("combined")); // Logs detalhados no terminal para monitorar requisições
@@ -35,19 +36,18 @@ app.use(express.urlencoded({ extended: true })); // Processar dados enviados via
  */
 const authenticate = (req, res, next) => {
   const token = req.headers["authorization"];
-  const validTokens = ["SEU_TOKEN_SEGURO"]; // Lista de tokens válidos
 
   if (!token) {
     console.warn(`[${new Date().toISOString()}] Tentativa de acesso sem token.`);
     return res.status(401).json({ error: "Unauthorized: No token provided" });
   }
 
-  if (validTokens.includes(token)) {
+  if (VALID_TOKENS.includes(token)) {
     console.log(`[${new Date().toISOString()}] Autenticação bem-sucedida para ${req.method} ${req.url}`);
     next(); // Permitir o acesso à rota
   } else {
     console.error(`[${new Date().toISOString()}] Erro de autenticação: Token inválido para ${req.method} ${req.url}`);
-    res.status(401).json({ error: "Unauthorized: Invalid token" });
+    return res.status(401).json({ error: "Unauthorized: Invalid token" });
   }
 };
 
@@ -60,6 +60,9 @@ const analyticsRoutes = require("./routes/analytics");
 const { router: gestaoDeStockRouter } = require("./models/GestaoDeStockFactory");
 const { router: organizacaoDePrateleirasRouter } = require("./models/OrganizacaoDePrateleirasFactory");
 
+// Rotas para Testes
+const testsRouter = require("./tests");
+
 // Aplicar autenticação apenas em rotas sensíveis
 app.use("/deploy", authenticate); // Protege apenas as rotas de deploy
 app.use("/config", configRoutes); // Rotas de configuração
@@ -69,13 +72,18 @@ app.use("/analytics", analyticsRoutes); // Rotas de analytics
 app.use("/gestaodestock", gestaoDeStockRouter); // Rota para Gestão de Stock
 app.use("/organizacaoprateleiras", organizacaoDePrateleirasRouter); // Rota para Organização de Prateleiras
 
+// Adicionar rotas de testes
+app.use("/tests", testsRouter); // Rotas para testes
+
 // Iniciar o Servidor
 app.listen(PORT, () => {
-  console.log(`Activity Provider is running on ${BASE_URL}`);
-  console.log("Rotas Registradas:");
-  console.log(listEndpoints(app)); // Listar todas as rotas registradas
+  console.log(`============================================`);
+  console.log(`🚀 Activity Provider is running on ${BASE_URL}`);
+  console.log(`📋 Swagger docs available at ${BASE_URL}/api-docs`);
+  console.log(`🌐 Endpoints disponíveis:`);
+  console.log(listEndpoints(app));
+  console.log(`============================================`);
 });
 
 // Importa o Swagger após o restante das configurações
 require("./swagger")(app); // Configura a documentação Swagger
-console.log(`Swagger docs available at ${BASE_URL}/api-docs`);
