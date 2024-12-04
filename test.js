@@ -4,13 +4,15 @@
  * Descrição: Testes para verificar a funcionalidade dos produtos e criadores.
  */
 
+// Importação dos módulos necessários
 const GestaoDeStockFactory = require("./models/GestaoDeStockFactory");
 const OrganizacaoDePrateleirasFactory = require("./models/OrganizacaoDePrateleirasFactory");
 const GestaoDeStock = require("./models/GestaoDeStock");
 const OrganizacaoDePrateleiras = require("./models/OrganizacaoDePrateleiras");
 
 console.log("===== Testando Produtos Concretos =====");
-// Produto: Gestão de Stocks
+
+// Testando Produto: Gestão de Stocks
 const atividadeStock = new GestaoDeStock(
   "Gestão de Stocks",
   "Atividade para gerenciar o stock inicial.",
@@ -20,7 +22,7 @@ console.log("\nDetalhes da Gestão de Stocks:");
 console.log(atividadeStock.getDetails());
 atividadeStock.execute();
 
-// Produto: Organização de Prateleiras
+// Testando Produto: Organização de Prateleiras
 const atividadePrateleiras = new OrganizacaoDePrateleiras(
   "Organização de Prateleiras",
   "Atividade para otimizar o layout das prateleiras.",
@@ -31,23 +33,24 @@ console.log(atividadePrateleiras.getDetails());
 atividadePrateleiras.execute();
 
 console.log("\n===== Testando Criadores Concretos =====");
-// Criador Concreto: Gestão de Stock
+
+// Testando Criador Concreto: Gestão de Stock
 const gestaoFactory = new GestaoDeStockFactory();
 const atividadeStockCriada = gestaoFactory.createActivity({
   name: "Gestão de Stock Avançada",
   description: "Gerenciamento avançado de Stocks.",
-  stockLevel: 200,
+  stockLevel: 200, // Parâmetro necessário
 });
 console.log("\nAtividade Criada - Gestão de Stocks:");
 console.log(atividadeStockCriada.getDetails());
 atividadeStockCriada.execute();
 
-// Criador Concreto: Organização de Prateleiras
+// Testando Criador Concreto: Organização de Prateleiras
 const organizacaoFactory = new OrganizacaoDePrateleirasFactory();
 const atividadePrateleirasCriada = organizacaoFactory.createActivity({
   name: "Reorganização de Prateleiras",
   description: "Redefinição do layout para otimização.",
-  shelfLayout: "Layout Atualizado",
+  shelfLayout: "Layout Atualizado", // Parâmetro necessário
 });
 console.log("\nAtividade Criada - Organização de Prateleiras:");
 console.log(atividadePrateleirasCriada.getDetails());

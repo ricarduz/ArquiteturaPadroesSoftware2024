@@ -17,7 +17,7 @@ const VALID_TOKENS = process.env.VALID_TOKENS ? process.env.VALID_TOKENS.split("
 
 // Middleware para Logs e CORS
 app.use(morgan("combined")); // Logs detalhados no terminal para monitorar requisições
-app.use(cors({ origin: "*" })); // Permitir todos os domínios (para produção, ajuste para restringir)
+app.use(cors({ origin: "*" })); // Permitir todos os domínios (ajustar para produção)
 
 // Middleware para Log de Requisições
 app.use((req, res, next) => {
@@ -32,7 +32,6 @@ app.use(express.urlencoded({ extended: true })); // Processar dados enviados via
 // Middleware de Autenticação
 /**
  * Middleware de autenticação que verifica se o token de autorização é válido.
- * Para rotas protegidas, é necessário enviar um cabeçalho "Authorization" com um token válido.
  */
 const authenticate = (req, res, next) => {
   const token = req.headers["authorization"];
@@ -46,34 +45,30 @@ const authenticate = (req, res, next) => {
     console.log(`[${new Date().toISOString()}] Autenticação bem-sucedida para ${req.method} ${req.url}`);
     next(); // Permitir o acesso à rota
   } else {
-    console.error(`[${new Date().toISOString()}] Erro de autenticação: Token inválido para ${req.method} ${req.url}`);
+    console.error(`[${new Date().toISOString()}] Erro de autenticação: Token inválido.`);
     return res.status(401).json({ error: "Unauthorized: Invalid token" });
   }
 };
 
-// Rotas
+// Importação de rotas
 const configRoutes = require("./routes/config");
 const deployRoutes = require("./routes/deploy");
 const analyticsRoutes = require("./routes/analytics");
-
-// Rotas para Criadores de Atividades
 const { router: GestaoDeStockRouter } = require("./models/GestaoDeStockFactory");
 const { router: OrganizacaoDePrateleirasRouter } = require("./models/OrganizacaoDePrateleirasFactory");
-
-// Rotas para Testes
 const testRouter = require("./test");
 
-// Aplicar autenticação apenas em rotas sensíveis
-app.use("/deploy", authenticate); // Protege apenas as rotas de deploy
+// Aplicar autenticação nas rotas protegidas
+app.use("/deploy", authenticate); // Rotas de deploy protegidas
 app.use("/config", configRoutes); // Rotas de configuração
 app.use("/analytics", analyticsRoutes); // Rotas de analytics
 
-// Adicionar rotas para criadores
-app.use("/gestaodestock", GestaoDeStockRouter); // Rota para Gestão de Stock
-app.use("/organizacaoprateleiras", OrganizacaoDePrateleirasRouter); // Rota para Organização de Prateleiras
+// Rotas específicas para os criadores de atividades
+app.use("/gestaodestock", GestaoDeStockRouter);
+app.use("/organizacaoprateleiras", OrganizacaoDePrateleirasRouter);
 
-// Adicionar rotas de testes
-app.use("/test", testRouter); // Rotas para testes
+// Rotas para testes
+app.use("/test", testRouter);
 
 // Iniciar o Servidor
 app.listen(PORT, () => {
@@ -85,5 +80,5 @@ app.listen(PORT, () => {
   console.log(`============================================`);
 });
 
-// Importa o Swagger após o restante das configurações
-require("./swagger")(app); // Configura a documentação Swagger
+// Configuração Swagger
+require("./swagger")(app);
