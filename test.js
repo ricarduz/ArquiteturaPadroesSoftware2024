@@ -1,4 +1,4 @@
-/**
+s/**
  * Autor: Ricardo Isaias Serafim
  * Email: 2302605@estudante.uab.pt
  * Descrição: Testes para verificar a funcionalidade dos produtos e criadores.
@@ -10,13 +10,13 @@ const GestaoDeStock = require("./models/GestaoDeStock");
 const OrganizacaoDePrateleiras = require("./models/OrganizacaoDePrateleiras");
 
 console.log("===== Testando Produtos Concretos =====");
-// Produto: Gestão de Estoque
+// Produto: Gestão de Stcks
 const atividadeStock = new GestaoDeStock(
-  "Gestão de Estoque",
-  "Atividade para gerenciar o estoque inicial.",
+  "Gestão de Stocks",
+  "Atividade para gerenciar o stock inicial.",
   100
 );
-console.log("Detalhes da Gestão de Estoque:");
+console.log("Detalhes da Gestão de Stock:");
 console.log(atividadeStock.getDetails());
 atividadeStock.execute();
 
@@ -31,14 +31,14 @@ console.log(atividadePrateleiras.getDetails());
 atividadePrateleiras.execute();
 
 console.log("\n===== Testando Criadores Concretos =====");
-// Criador Concreto: Gestão de Estoque
+// Criador Concreto: Gestão de Stock
 const gestaoFactory = new GestaoDeStockFactory();
 const atividadeStockCriada = gestaoFactory.createActivity({
   name: "Gestão de Stock Avançada",
-  description: "Gerenciamento avançado de estoque.",
+  description: "Gerenciamento avançado de Stocks.",
   stockLevel: 200,
 });
-console.log("Atividade Criada - Gestão de Estoque:");
+console.log("Atividade Criada - Gestão de Stoks:");
 console.log(atividadeStockCriada.getDetails());
 atividadeStockCriada.execute();
 

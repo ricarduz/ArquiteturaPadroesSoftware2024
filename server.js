@@ -1,4 +1,4 @@
-/**
+/** 
  * Autor: Ricardo Isaias Serafim
  * Email: 2302605@estudante.uab.pt
  * Descrição: Arquivo principal do servidor da API.
