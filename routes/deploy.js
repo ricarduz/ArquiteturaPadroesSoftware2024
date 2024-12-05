@@ -116,7 +116,7 @@ const validateDeployData = (req, res, next) => {
  *                   description: Mensagem de erro
  */
 
-// GET /deploy
+// GET /deploy - Verificação do funcionamento
 router.get("/", (req, res) => {
   res.send(`
     <html>
@@ -127,7 +127,6 @@ router.get("/", (req, res) => {
     </html>
   `);
 });
-
 
 // POST /deploy com validação
 router.post("/", validateDeployData, (req, res) => {

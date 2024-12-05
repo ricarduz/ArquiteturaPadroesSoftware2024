@@ -33,6 +33,25 @@ class OrganizacaoDePrateleiras extends Activity {
   }
 
   /**
+ * @swagger
+ * components:
+ *   schemas:
+ *     OrganizacaoDePrateleiras:
+ *       type: object
+ *       description: Representa a atividade de Organização de Prateleiras.
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Nome da atividade.
+ *         description:
+ *           type: string
+ *           description: Descrição da atividade.
+ *         shelfLayout:
+ *           type: string
+ *           description: Layout inicial das prateleiras.
+ */
+
+  /**
    * Executa a lógica principal para organização de prateleiras.
    */
   execute() {

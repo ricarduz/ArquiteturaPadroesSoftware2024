@@ -25,6 +25,24 @@ class GestaoDeStockFactory extends ActivityFactory {
   }
 }
 
+/**
+ * @swagger
+ * tags:
+ *   name: GestaoDeStock
+ *   description: Endpoints relacionados à Gestão de Stocks.
+ */
+
+/**
+ * @swagger
+ * /gestaodestock:
+ *   get:
+ *     summary: Verifica o funcionamento do endpoint de Gestão de Stocks.
+ *     tags: [GestaoDeStock]
+ *     responses:
+ *       200:
+ *         description: Endpoint funcionando corretamente.
+ */
+
 // Endpoint para verificar funcionamento
 router.get("/", (req, res) => {
   res.send(`

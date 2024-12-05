@@ -20,7 +20,7 @@ const options = {
   definition: {
     openapi: "3.0.0", // Define a versão do OpenAPI (Swagger 3.0.0)
     info: {
-      title: "Retail4Everyone", // Nome do projeto
+      title: "Retail4Everyone", //Nome do Projeto
       version: "1.0.0", // Versão da API
       description: "API para Inven!RA - Documentação da plataforma Retail4Everyone.", // Breve descrição
     },
@@ -35,8 +35,10 @@ const options = {
       },
     ],
   },
-  apis: ["./routes/*.js"], // Diretório onde os arquivos de rotas documentados com Swagger estão localizados
+  // Diretório onde os arquivos de rotas documentados com Swagger estão localizados
+  apis: ["./routes/*.js", "./models/*.js", "./controllers/*.js"],
 };
+
 
 /**
  * Geração de documentação

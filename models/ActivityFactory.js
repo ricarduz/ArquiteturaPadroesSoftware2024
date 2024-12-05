@@ -15,6 +15,19 @@ class ActivityFactory {
       throw new Error("O método 'createActivity()' deve ser implementado.");
     }
   }
-  
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     ActivityFactory:
+ *       type: object
+ *       description: Classe abstrata para criar atividades.
+ *       properties:
+ *         createActivity:
+ *           type: function
+ *           description: Método para instanciar uma atividade.
+ */
+ 
   module.exports = ActivityFactory;
    

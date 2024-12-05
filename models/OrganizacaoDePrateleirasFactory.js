@@ -29,6 +29,24 @@ class OrganizacaoDePrateleirasFactory {
   }
 }
 
+/**
+ * @swagger
+ * tags:
+ *   name: OrganizacaoDePrateleiras
+ *   description: Endpoints relacionados à Organização de Prateleiras.
+ */
+
+/**
+ * @swagger
+ * /organizacaoprateleiras:
+ *   get:
+ *     summary: Verifica o funcionamento do endpoint de Organização de Prateleiras.
+ *     tags: [OrganizacaoDePrateleiras]
+ *     responses:
+ *       200:
+ *         description: Endpoint funcionando corretamente.
+ */
+
 // Endpoint para verificar funcionamento
 router.get("/", (req, res) => {
   res.send(`

@@ -33,6 +33,25 @@ class GestaoDeStock extends Activity {
     };
   }
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     GestaoDeStock:
+ *       type: object
+ *       description: Representa a atividade de Gestão de Stocks.
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Nome da atividade.
+ *         description:
+ *           type: string
+ *           description: Descrição da atividade.
+ *         stockLevel:
+ *           type: number
+ *           description: Nível inicial de stock.
+ */
+
   /**
    * Executa a lógica principal para gestão de Stock.
    */

@@ -28,7 +28,7 @@
       "suites": [
         {
           "uuid": "96c842f9-1e6c-4fb7-bed8-198c48a95216",
-          "title": "Teste de Produtos e Fábricas",
+          "title": "Teste de Produtos",
           "fullFile": "C:\\Users\\ricar\\activity-provider\\tests\\index.test.js",
           "file": "\\tests\\index.test.js",
           "beforeHooks": [],
@@ -45,7 +45,7 @@
               "tests": [
                 {
                   "title": "Deve criar e executar uma atividade de Gestão de Stock",
-                  "fullTitle": "Teste de Produtos e Fábricas Produtos Deve criar e executar uma atividade de Gestão de Stock",
+                  "fullTitle": "Teste de Produtos deve criar e executar uma atividade de Gestão de Stock",
                   "timedOut": false,
                   "duration": 1,
                   "state": "passed",
@@ -63,7 +63,7 @@
                 },
                 {
                   "title": "Deve criar e executar uma atividade de Organização de Prateleiras",
-                  "fullTitle": "Teste de Produtos e Fábricas Produtos Deve criar e executar uma atividade de Organização de Prateleiras",
+                  "fullTitle": "Teste de Produtos deve criar e executar uma atividade de Organização de Prateleiras",
                   "timedOut": false,
                   "duration": 1,
                   "state": "passed",
@@ -95,15 +95,15 @@
             },
             {
               "uuid": "7b3b55df-236b-4daf-8949-b1b873c15fd1",
-              "title": "Fábricas",
+              "title": "Factory",
               "fullFile": "C:\\Users\\ricar\\activity-provider\\tests\\index.test.js",
               "file": "\\tests\\index.test.js",
               "beforeHooks": [],
               "afterHooks": [],
               "tests": [
                 {
-                  "title": "Deve criar uma atividade através da fábrica de Gestão de Stock",
-                  "fullTitle": "Teste de Produtos e Fábricas Fábricas Deve criar uma atividade através da fábrica de Gestão de Stock",
+                  "title": "Deve criar uma atividade através da Gestão de Stock",
+                  "fullTitle": "Teste de Produtos deve criar uma atividade através da Gestão de Stock",
                   "timedOut": false,
                   "duration": 0,
                   "state": "failed",
@@ -124,8 +124,8 @@
                   "skipped": false
                 },
                 {
-                  "title": "Deve criar uma atividade através da fábrica de Organização de Prateleiras",
-                  "fullTitle": "Teste de Produtos e Fábricas Fábricas Deve criar uma atividade através da fábrica de Organização de Prateleiras",
+                  "title": "Deve criar uma atividade através da Organização de Prateleiras",
+                  "fullTitle": "Teste de Produtos deve criar uma atividade através da Organização de Prateleiras",
                   "timedOut": false,
                   "duration": 0,
                   "state": "failed",
