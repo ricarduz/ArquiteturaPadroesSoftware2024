@@ -1,4 +1,5 @@
 /**
+ * OrganizacaoDePrateleiras.js
  * Autor: Ricardo Isaias Serafim
  * Email: 2302605@estudante.uab.pt
  * Descrição: Produto concreto - define uma atividade específica para organização de prateleiras.

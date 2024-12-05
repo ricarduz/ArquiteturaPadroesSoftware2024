@@ -1,4 +1,5 @@
 /**
+ * server.js
  * Autor: Ricardo Isaias Serafim
  * Email: 2302605@estudante.uab.pt
  * Descrição: Arquivo principal do servidor da API.
@@ -9,6 +10,7 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const listEndpoints = require("express-list-endpoints");
+const path = require("path");
 const app = require("./app"); // Importa a configuração do `app.js`
 
 // Variáveis de ambiente
@@ -30,19 +32,36 @@ const { router: OrganizacaoDePrateleirasRouter } = require("./models/Organizacao
 app.use("/config", configRoutes);
 app.use("/deploy", deployRoutes);
 app.use("/analytics", analyticsRoutes);
-app.use("/gestaodestock", GestaoDeStockRouter);
-app.use("/organizacaoprateleiras", OrganizacaoDePrateleirasRouter);
+
+// Inclusão condicional das rotas para evitar erros
+if (GestaoDeStockRouter) {
+  app.use("/gestaodestock", GestaoDeStockRouter);
+  console.log("🔗 Rota /gestaodestock registrada.");
+} else {
+  console.log("⚠️ Rota /gestaodestock não foi registrada (router não encontrado).");
+}
+
+if (OrganizacaoDePrateleirasRouter) {
+  app.use("/organizacaoprateleiras", OrganizacaoDePrateleirasRouter);
+  console.log("🔗 Rota /organizacaoprateleiras registrada.");
+} else {
+  console.log("⚠️ Rota /organizacaoprateleiras não foi registrada (router não encontrado).");
+}
 
 // Configuração Swagger
 require("./swagger")(app); // Configura a documentação Swagger
-console.log(`Swagger docs available at ${BASE_URL}/api-docs`);
+console.log(`📋 Swagger docs disponível em: ${BASE_URL}/api-docs`);
+
+// Servir arquivos estáticos para o relatório de testes
+app.use("/tests", express.static(path.join(__dirname, "mochawesome-report")));
+console.log(`🧪 Relatório de testes disponível em: ${BASE_URL}/tests/mochawesome.html`);
 
 // Inicialização do servidor
 app.listen(PORT, () => {
   console.log("============================================");
-  console.log(`🚀 Activity Provider is running on ${BASE_URL}`);
-  console.log(`📋 Swagger docs available at ${BASE_URL}/api-docs`);
-  console.log("🌐 Endpoints disponíveis:");
-  console.log(listEndpoints(app)); // Lista rotas registradas
+  console.log(`🚀 Servidor iniciado em: ${BASE_URL}`);
+  console.log(`📋 Swagger API Docs: ${BASE_URL}/api-docs`);
+  console.log("🌟 Endpoints disponíveis:");
+  console.log(listEndpoints(app)); // Lista todas as rotas registradas
   console.log("============================================");
 });

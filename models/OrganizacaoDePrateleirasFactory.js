@@ -1,4 +1,5 @@
 /**
+ * OrganizacaoDePrateleirasFactory.js
  * Autor: Ricardo Isaias Serafim
  * Email: 2302605@estudante.uab.pt
  * Descrição: Factory para criar instâncias da classe OrganizacaoDePrateleiras.
@@ -35,7 +36,7 @@ router.get("/", (req, res) => {
       <body>
         <h2>O Ricardo indica que o endpoint de Organização de Prateleira está a funcionar!</h2>
         <p>Para abrir os testes realizados, use: 
-          <a href="/tests" target="_blank">Testes de Organização de Prateleira</a>
+          <a href="/tests/mochawesome.html" target="_blank">Testes de Organização de Prateleira</a>
         </p>
       </body>
     </html>

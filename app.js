@@ -1,4 +1,5 @@
 /**
+ * app.js
  * Autor: Ricardo Isaias Serafim
  * Email: 2302605@estudante.uab.pt
  * Descrição: Arquivo principal do servidor da API.
@@ -42,6 +43,9 @@ if (OrganizacaoDePrateleirasRouter) {
   app.use("/organizacaoprateleiras", OrganizacaoDePrateleirasRouter);
 }
 
+// Servir o diretório mochawesome-report
+app.use("/tests", express.static(path.join(__dirname, "mochawesome-report")));
+
 // Página inicial
 app.get("/", (req, res) => {
     const today = new Date().toLocaleDateString("pt-PT", {
@@ -84,7 +88,7 @@ app.get("/", (req, res) => {
               <a href="/analytics/list" target="_blank">Lista de Analytics</a>
             </li>
             <li>
-              <a href="/tests/index.test" target="_blank">Ver resultados dos testes: Relatório de Testes</a>
+              <a href="/tests/mochawesome.html" target="_blank">Ver resultados dos testes: Relatório de Testes</a>
             </li>
           </ul>
           
@@ -109,11 +113,6 @@ app.get("/", (req, res) => {
   
   
   
-// Servir relatório de testes
-app.get("/tests", (req, res) => {
-  res.sendFile(path.join(__dirname, "mochawesome-report", "mochawesome.html"));
-});
-
 // Listar endpoints (útil para depuração)
 app.get("/endpoints", (req, res) => {
   res.json(listEndpoints(app));

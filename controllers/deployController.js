@@ -1,4 +1,5 @@
 /**
+ * DeployController.js
  * Autor: Ricardo Isaias Serafim
  * Email: 2302605@estudante.uab.pt
  * Descrição: Gestão da criação de instâncias de atividades.

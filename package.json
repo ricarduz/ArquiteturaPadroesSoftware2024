@@ -4,12 +4,12 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "mocha tests/ --reporter mochawesome"
+    "test": "mocha tests/ --reporter mochawesome --reporter-options reportDir=mochawesome-report,reportFilename=mochawesome"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ricardo Isaias Serafim",
   "license": "ISC",
-  "description": "",
+  "description": "API para gestão de atividades Retail4Everyone",
   "dependencies": {
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
@@ -23,6 +23,8 @@
   },
   "devDependencies": {
     "chai": "^5.1.2",
-    "mocha": "^11.0.1"
+    "mocha": "^11.0.1",
+    "mochawesome": "^7.1.3"
   }
 }
+

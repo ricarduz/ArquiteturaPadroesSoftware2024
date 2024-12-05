@@ -1,4 +1,5 @@
 /**
+ * GestaoDeStocks.js
  * Autor: Ricardo Isaias Serafim
  * Email: 2302605@estudante.uab.pt
  * Descrição: Produto Concreto - define uma atividade específica para gestão de stock.
