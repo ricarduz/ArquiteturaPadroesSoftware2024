@@ -1,15 +1,15 @@
 {
   "stats": {
-    "suites": 3,
-    "tests": 4,
-    "passes": 2,
+    "suites": 5,
+    "tests": 9,
+    "passes": 4,
     "pending": 0,
-    "failures": 2,
-    "start": "2024-12-05T13:17:20.353Z",
-    "end": "2024-12-05T13:17:20.374Z",
-    "duration": 21,
-    "testsRegistered": 4,
-    "passPercent": 50,
+    "failures": 5,
+    "start": "2024-12-29T18:11:25.949Z",
+    "end": "2024-12-29T18:11:26.019Z",
+    "duration": 70,
+    "testsRegistered": 9,
+    "passPercent": 44.44444444444444,
     "pendingPercent": 0,
     "other": 0,
     "hasOther": false,
@@ -18,16 +18,16 @@
   },
   "results": [
     {
-      "uuid": "bcbd0938-5e9b-43fe-8aa6-17abc8a78a97",
+      "uuid": "a07013d3-03a7-4704-9ea6-46e1b469d6ab",
       "title": "",
-      "fullFile": "C:\\Users\\ricar\\activity-provider\\tests\\index.test.js",
-      "file": "\\tests\\index.test.js",
+      "fullFile": "",
+      "file": "",
       "beforeHooks": [],
       "afterHooks": [],
       "tests": [],
       "suites": [
         {
-          "uuid": "96c842f9-1e6c-4fb7-bed8-198c48a95216",
+          "uuid": "5718f79c-6ef6-4b0d-97c0-56ce9a0d9124",
           "title": "Teste de Produtos",
           "fullFile": "C:\\Users\\ricar\\activity-provider\\tests\\index.test.js",
           "file": "\\tests\\index.test.js",
@@ -36,7 +36,7 @@
           "tests": [],
           "suites": [
             {
-              "uuid": "2b15de6b-f0ea-4e1a-b33f-fd85a020dbe2",
+              "uuid": "8f16e90c-e155-4e49-88e4-7d189a193e54",
               "title": "Produtos",
               "fullFile": "C:\\Users\\ricar\\activity-provider\\tests\\index.test.js",
               "file": "\\tests\\index.test.js",
@@ -45,7 +45,7 @@
               "tests": [
                 {
                   "title": "Deve criar e executar uma atividade de Gestão de Stock",
-                  "fullTitle": "Teste de Produtos deve criar e executar uma atividade de Gestão de Stock",
+                  "fullTitle": "Teste de Produtos Produtos Deve criar e executar uma atividade de Gestão de Stock",
                   "timedOut": false,
                   "duration": 1,
                   "state": "passed",
@@ -56,14 +56,14 @@
                   "context": null,
                   "code": "const atividade = new GestaoDeStock(\n  \"Gestão de Stocks\",\n  \"Descrição teste\",\n  100\n);\nassert.strictEqual(atividade.name, \"Gestão de Stocks\");\nassert.strictEqual(atividade.stockLevel, 100);\natividade.execute();",
                   "err": {},
-                  "uuid": "3195d560-b973-4eb7-aa41-ba3e32a20802",
-                  "parentUUID": "2b15de6b-f0ea-4e1a-b33f-fd85a020dbe2",
+                  "uuid": "a4d7a564-e2da-4b5c-bae7-9b7911690ffe",
+                  "parentUUID": "8f16e90c-e155-4e49-88e4-7d189a193e54",
                   "isHook": false,
                   "skipped": false
                 },
                 {
                   "title": "Deve criar e executar uma atividade de Organização de Prateleiras",
-                  "fullTitle": "Teste de Produtos deve criar e executar uma atividade de Organização de Prateleiras",
+                  "fullTitle": "Teste de Produtos Produtos Deve criar e executar uma atividade de Organização de Prateleiras",
                   "timedOut": false,
                   "duration": 1,
                   "state": "passed",
@@ -74,16 +74,16 @@
                   "context": null,
                   "code": "const atividade = new OrganizacaoDePrateleiras(\n  \"Organização de Prateleiras\",\n  \"Descrição teste\",\n  \"Layout Inicial\"\n);\nassert.strictEqual(atividade.name, \"Organização de Prateleiras\");\nassert.strictEqual(atividade.shelfLayout, \"Layout Inicial\");\natividade.execute();",
                   "err": {},
-                  "uuid": "1ef7e128-3f2b-4e64-bca9-d5b606aafea5",
-                  "parentUUID": "2b15de6b-f0ea-4e1a-b33f-fd85a020dbe2",
+                  "uuid": "aa7083c5-d7fe-4999-a394-053ce732a213",
+                  "parentUUID": "8f16e90c-e155-4e49-88e4-7d189a193e54",
                   "isHook": false,
                   "skipped": false
                 }
               ],
               "suites": [],
               "passes": [
-                "3195d560-b973-4eb7-aa41-ba3e32a20802",
-                "1ef7e128-3f2b-4e64-bca9-d5b606aafea5"
+                "a4d7a564-e2da-4b5c-bae7-9b7911690ffe",
+                "aa7083c5-d7fe-4999-a394-053ce732a213"
               ],
               "failures": [],
               "pending": [],
@@ -94,7 +94,7 @@
               "_timeout": 2000
             },
             {
-              "uuid": "7b3b55df-236b-4daf-8949-b1b873c15fd1",
+              "uuid": "b25e035a-c9c0-47ab-84fb-f3a2b4977cff",
               "title": "Factory",
               "fullFile": "C:\\Users\\ricar\\activity-provider\\tests\\index.test.js",
               "file": "\\tests\\index.test.js",
@@ -102,10 +102,10 @@
               "afterHooks": [],
               "tests": [
                 {
-                  "title": "Deve criar uma atividade através da Gestão de Stock",
-                  "fullTitle": "Teste de Produtos deve criar uma atividade através da Gestão de Stock",
+                  "title": "Deve criar uma atividade através do Gestão de Stock",
+                  "fullTitle": "Teste de Produtos Factory Deve criar uma atividade através do Gestão de Stock",
                   "timedOut": false,
-                  "duration": 0,
+                  "duration": 1,
                   "state": "failed",
                   "speed": null,
                   "pass": false,
@@ -115,17 +115,17 @@
                   "code": "const factory = new GestaoDeStockFactory();\nconst atividade = factory.createActivity({\n  name: \"Teste\",\n  description: \"Teste descrição\",\n  stockLevel: 50,\n});\nassert.strictEqual(atividade.stockLevel, 50);",
                   "err": {
                     "message": "TypeError: GestaoDeStockFactory is not a constructor",
-                    "estack": "TypeError: GestaoDeStockFactory is not a constructor\n    at Context.<anonymous> (tests\\index.test.js:40:23)\n    at process.processImmediate (node:internal/timers:491:21)",
+                    "estack": "TypeError: GestaoDeStockFactory is not a constructor\n    at Context.<anonymous> (tests\\index.test.js:46:23)\n    at process.processImmediate (node:internal/timers:491:21)",
                     "diff": null
                   },
-                  "uuid": "cf06fa7b-6b9d-4511-98af-1b9940fcd708",
-                  "parentUUID": "7b3b55df-236b-4daf-8949-b1b873c15fd1",
+                  "uuid": "9eb8690b-5d72-46d7-af84-0ddc27e3a008",
+                  "parentUUID": "b25e035a-c9c0-47ab-84fb-f3a2b4977cff",
                   "isHook": false,
                   "skipped": false
                 },
                 {
-                  "title": "Deve criar uma atividade através da Organização de Prateleiras",
-                  "fullTitle": "Teste de Produtos deve criar uma atividade através da Organização de Prateleiras",
+                  "title": "Deve criar uma atividade através do Organização de Prateleiras",
+                  "fullTitle": "Teste de Produtos Factory Deve criar uma atividade através do Organização de Prateleiras",
                   "timedOut": false,
                   "duration": 0,
                   "state": "failed",
@@ -137,11 +137,11 @@
                   "code": "const factory = new OrganizacaoDePrateleirasFactory();\nconst atividade = factory.createActivity({\n  name: \"Teste\",\n  description: \"Teste descrição\",\n  shelfLayout: \"Layout Teste\",\n});\nassert.strictEqual(atividade.shelfLayout, \"Layout Teste\");",
                   "err": {
                     "message": "TypeError: OrganizacaoDePrateleirasFactory is not a constructor",
-                    "estack": "TypeError: OrganizacaoDePrateleirasFactory is not a constructor\n    at Context.<anonymous> (tests\\index.test.js:50:23)\n    at process.processImmediate (node:internal/timers:491:21)",
+                    "estack": "TypeError: OrganizacaoDePrateleirasFactory is not a constructor\n    at Context.<anonymous> (tests\\index.test.js:56:23)\n    at process.processImmediate (node:internal/timers:491:21)",
                     "diff": null
                   },
-                  "uuid": "98869137-d4b4-4a4c-8354-680eee2307ea",
-                  "parentUUID": "7b3b55df-236b-4daf-8949-b1b873c15fd1",
+                  "uuid": "4aca150e-0ea6-49b9-91cb-d26908735a60",
+                  "parentUUID": "b25e035a-c9c0-47ab-84fb-f3a2b4977cff",
                   "isHook": false,
                   "skipped": false
                 }
@@ -149,12 +149,12 @@
               "suites": [],
               "passes": [],
               "failures": [
-                "cf06fa7b-6b9d-4511-98af-1b9940fcd708",
-                "98869137-d4b4-4a4c-8354-680eee2307ea"
+                "9eb8690b-5d72-46d7-af84-0ddc27e3a008",
+                "4aca150e-0ea6-49b9-91cb-d26908735a60"
               ],
               "pending": [],
               "skipped": [],
-              "duration": 0,
+              "duration": 1,
               "root": false,
               "rootEmpty": false,
               "_timeout": 2000
@@ -165,6 +165,155 @@
           "pending": [],
           "skipped": [],
           "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "dd0de2a6-286f-46a5-9de8-09430df09c3b",
+          "title": "Testes do Endpoint /deploy",
+          "fullFile": "C:\\Users\\ricar\\activity-provider\\tests\\index.test.js",
+          "file": "\\tests\\index.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Deve criar uma atividade de Gestão de Stock com sucesso",
+              "fullTitle": "Testes do Endpoint /deploy Deve criar uma atividade de Gestão de Stock com sucesso",
+              "timedOut": false,
+              "duration": 30,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const response = await request(app)\n  .post(\"/deploy\")\n  .send({\n    activityType: \"GestaoDeStock\",\n    name: \"Teste Gestão de Stock\",\n    description: \"Descrição da atividade de gestão de stock\",\n    params: { stockLevel: 100 },\n  });\nassert.strictEqual(response.status, 200);\nassert.strictEqual(response.body.activityDetails.name, \"Teste Gestão de Stock\");\nassert.strictEqual(response.body.activityDetails.stockLevel, 100);",
+              "err": {
+                "message": "AssertionError: Expected values to be strictly equal:\n\n500 !== 200\n",
+                "estack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n500 !== 200\n\n    at Context.<anonymous> (tests\\index.test.js:81:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+                "diff": "- 500\n+ 200\n"
+              },
+              "uuid": "40a08358-3c6a-46ed-8234-0ff0b5aae173",
+              "parentUUID": "dd0de2a6-286f-46a5-9de8-09430df09c3b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deve criar uma atividade de Organização de Prateleiras com sucesso",
+              "fullTitle": "Testes do Endpoint /deploy Deve criar uma atividade de Organização de Prateleiras com sucesso",
+              "timedOut": false,
+              "duration": 6,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const response = await request(app)\n  .post(\"/deploy\")\n  .send({\n    activityType: \"OrganizacaoDePrateleiras\",\n    name: \"Teste Organização de Prateleiras\",\n    description: \"Descrição da atividade de organização de prateleiras\",\n    params: { shelfLayout: \"Layout Inicial\" },\n  });\nassert.strictEqual(response.status, 200);\nassert.strictEqual(response.body.activityDetails.name, \"Teste Organização de Prateleiras\");\nassert.strictEqual(response.body.activityDetails.shelfLayout, \"Layout Inicial\");",
+              "err": {
+                "message": "AssertionError: Expected values to be strictly equal:\n\n500 !== 200\n",
+                "estack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n500 !== 200\n\n    at Context.<anonymous> (tests\\index.test.js:96:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+                "diff": "- 500\n+ 200\n"
+              },
+              "uuid": "793235f2-0e14-4b46-99c4-a5c9d60c0f9f",
+              "parentUUID": "dd0de2a6-286f-46a5-9de8-09430df09c3b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deve retornar erro ao enviar parâmetros inválidos",
+              "fullTitle": "Testes do Endpoint /deploy Deve retornar erro ao enviar parâmetros inválidos",
+              "timedOut": false,
+              "duration": 6,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const response = await request(app)\n  .post(\"/deploy\")\n  .send({\n    activityType: \"TipoInvalido\",\n    name: \"Atividade Invalida\",\n    description: \"Teste com tipo inválido\",\n    params: {},\n  });\nassert.strictEqual(response.status, 400);\nassert.ok(response.body.error);",
+              "err": {},
+              "uuid": "718507d1-807b-4f1d-91c0-756a2a4ca71e",
+              "parentUUID": "dd0de2a6-286f-46a5-9de8-09430df09c3b",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "718507d1-807b-4f1d-91c0-756a2a4ca71e"
+          ],
+          "failures": [
+            "40a08358-3c6a-46ed-8234-0ff0b5aae173",
+            "793235f2-0e14-4b46-99c4-a5c9d60c0f9f"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 42,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "2353acdc-da8d-4e32-8e2c-17dce79c9caa",
+          "title": "Testes do Endpoint /config",
+          "fullFile": "C:\\Users\\ricar\\activity-provider\\tests\\index.test.js",
+          "file": "\\tests\\index.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Deve retornar os parâmetros adaptados com sucesso",
+              "fullTitle": "Testes do Endpoint /config Deve retornar os parâmetros adaptados com sucesso",
+              "timedOut": false,
+              "duration": 6,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const response = await request(app).get(\"/config\");\nassert.strictEqual(response.status, 200);\nassert.strictEqual(response.body.stockLevel, 100);\nassert.strictEqual(response.body.salesGoal, 200);\nassert.strictEqual(response.body.campaignDuration, 7);\nassert.strictEqual(response.body.scenarioDescription, \"Campanha de Natal\");",
+              "err": {
+                "message": "AssertionError: Expected values to be strictly equal:\n\nundefined !== 100\n",
+                "estack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nundefined !== 100\n\n    at Context.<anonymous> (tests\\index.test.js:124:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+                "diff": null
+              },
+              "uuid": "784b25ef-18a3-4a16-b183-0b72c62a58bd",
+              "parentUUID": "2353acdc-da8d-4e32-8e2c-17dce79c9caa",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deve retornar erro ao enviar parâmetros inválidos para POST /config",
+              "fullTitle": "Testes do Endpoint /config Deve retornar erro ao enviar parâmetros inválidos para POST /config",
+              "timedOut": false,
+              "duration": 6,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const response = await request(app).post(\"/config\").send({\n  nivel_stock_inicial: \"invalido\",\n  objetivo_vendas: \"invalido\",\n  duracao_campanha: \"invalido\",\n  descricao_cenario: 12345,\n});\nassert.strictEqual(response.status, 400);\nassert.ok(response.text.includes(\"Erro\"));",
+              "err": {},
+              "uuid": "25d68b2e-9e63-4b09-ae31-a184c4f006ef",
+              "parentUUID": "2353acdc-da8d-4e32-8e2c-17dce79c9caa",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "25d68b2e-9e63-4b09-ae31-a184c4f006ef"
+          ],
+          "failures": [
+            "784b25ef-18a3-4a16-b183-0b72c62a58bd"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 12,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000

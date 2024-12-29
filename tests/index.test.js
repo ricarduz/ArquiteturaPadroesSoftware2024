@@ -2,17 +2,20 @@
  * index.test.js
  * Autor: Ricardo Isaias Serafim
  * Email: 2302605@estudante.uab.pt
- * Descrição: Agregador de testes
+ * Descrição: Agregador de testes para Produtos, Fábricas e Endpoints.
  */
 
 const assert = require("assert");
 const request = require("supertest");
-const app = require("../app"); // Certifique-se de que este é o caminho correto para o app configurado
+const app = require("../app");
 const GestaoDeStockFactory = require("../models/GestaoDeStockFactory");
 const OrganizacaoDePrateleirasFactory = require("../models/OrganizacaoDePrateleirasFactory");
 const GestaoDeStock = require("../models/GestaoDeStock");
 const OrganizacaoDePrateleiras = require("../models/OrganizacaoDePrateleiras");
 
+/**
+ * Testes relacionados a Produtos
+ */
 describe("Teste de Produtos", () => {
   describe("Produtos", () => {
     it("Deve criar e executar uma atividade de Gestão de Stock", () => {
@@ -61,6 +64,9 @@ describe("Teste de Produtos", () => {
   });
 });
 
+/**
+ * Testes relacionados ao Endpoint /deploy
+ */
 describe("Testes do Endpoint /deploy", () => {
   it("Deve criar uma atividade de Gestão de Stock com sucesso", async () => {
     const response = await request(app)
@@ -104,5 +110,32 @@ describe("Testes do Endpoint /deploy", () => {
 
     assert.strictEqual(response.status, 400);
     assert.ok(response.body.error);
+  });
+});
+
+/**
+ * Testes relacionados ao Endpoint /config
+ */
+describe("Testes do Endpoint /config", () => {
+  it("Deve retornar os parâmetros adaptados com sucesso", async () => {
+    const response = await request(app).get("/config");
+
+    assert.strictEqual(response.status, 200);
+    assert.strictEqual(response.body.stockLevel, 100);
+    assert.strictEqual(response.body.salesGoal, 200);
+    assert.strictEqual(response.body.campaignDuration, 7);
+    assert.strictEqual(response.body.scenarioDescription, "Campanha de Natal");
+  });
+
+  it("Deve retornar erro ao enviar parâmetros inválidos para POST /config", async () => {
+    const response = await request(app).post("/config").send({
+      nivel_stock_inicial: "invalido",
+      objetivo_vendas: "invalido",
+      duracao_campanha: "invalido",
+      descricao_cenario: 12345,
+    });
+
+    assert.strictEqual(response.status, 400);
+    assert.ok(response.text.includes("Erro"));
   });
 });

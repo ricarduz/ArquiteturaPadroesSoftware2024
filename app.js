@@ -59,7 +59,7 @@ app.get("/", (req, res) => {
         <body>
           <h1>Bem-vindo à API de Atividades / Retail4everyone</h1>
           
-          <p>Acesse a documentação em: 
+          <p>Acesso à documentação em: 
             <a href="/api-docs" target="_blank">Swagger API Docs</a>
           </p>
           
@@ -70,6 +70,13 @@ app.get("/", (req, res) => {
             </li>
             <li>
               <a href="/organizacaoprateleiras" target="_blank">Produto Concreto: Organização de Prateleiras</a>
+            </li>
+          </ul>
+
+          <h2>Padrão de estrutura - Adapter:</h2>
+          <ul>
+            <li>
+              <a href="/config/adapted" target="_blank">Resultados do Adapter</a>
             </li>
           </ul>
           
@@ -110,8 +117,6 @@ app.get("/", (req, res) => {
       </html>
     `);
   });
-  
-  
   
 // Listar endpoints (útil para depuração)
 app.get("/endpoints", (req, res) => {

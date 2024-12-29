@@ -6,7 +6,6 @@
     "start": "node server.js",
     "test": "mocha tests/ --reporter mochawesome --reporter-options reportDir=mochawesome-report,reportFilename=mochawesome"
   },
-
   "keywords": [],
   "author": "Ricardo Isaias Serafim",
   "license": "ISC",
@@ -25,7 +24,7 @@
   "devDependencies": {
     "chai": "^5.1.2",
     "mocha": "^11.0.1",
-    "mochawesome": "^7.1.3"
+    "mochawesome": "^7.1.3",
+    "supertest": "^7.0.0"
   }
 }
-

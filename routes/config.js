@@ -9,6 +9,10 @@ const router = express.Router();
 const Joi = require("joi");
 const cors = require("cors");
 const morgan = require("morgan");
+const ConfigAdapter = require("../adapters/ConfigAdapter");
+
+// Instância do adaptador
+const configAdapter = new ConfigAdapter();
 
 // Esquema de validação com Joi
 const configSchema = Joi.object({
@@ -24,6 +28,51 @@ let submittedData = null;
 // Middlewares
 router.use(cors({ origin: "https://invenira-platform.com" })); // Restrição de domínio
 router.use(morgan("combined")); // Logs detalhados
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Configuration:
+ *       type: object
+ *       required:
+ *         - nivel_stock_inicial
+ *         - objetivo_vendas
+ *         - duracao_campanha
+ *         - descricao_cenario
+ *       properties:
+ *         nivel_stock_inicial:
+ *           type: integer
+ *           description: Nível inicial de stock
+ *         objetivo_vendas:
+ *           type: integer
+ *           description: Meta de vendas
+ *         duracao_campanha:
+ *           type: integer
+ *           description: Duração da campanha em dias
+ *         descricao_cenario:
+ *           type: string
+ *           description: Descrição do cenário
+ *       example:
+ *         nivel_stock_inicial: 100
+ *         objetivo_vendas: 200
+ *         duracao_campanha: 7
+ *         descricao_cenario: "Campanha de Natal"
+ */
+
+/**
+ * @swagger
+ * /config:
+ *   get:
+ *     summary: Obtém a página de configuração inicial
+ *     responses:
+ *       200:
+ *         description: Página HTML com formulário de configuração inicial
+ *         content:
+ *           text/html:
+ *             schema:
+ *               type: string
+ */
 
 // GET /config - Renderiza o formulário
 router.get("/", (req, res) => {
@@ -46,18 +95,27 @@ router.get("/", (req, res) => {
 
           <button type="submit">Enviar</button>
         </form>
-        <p>Para abrir o link onde o repositório está guardado, usar: <a href="https://github.com/ricarduz/ArquiteturaPadroesSoftware2024" target="_blank">GitHub</a></p>
-        <p>Para abrir o link onde o API está a correr, usar: <a href="/" target="_blank">Render</a></p>  
-        <p>Para abrir o link Analytics, usar: <a href="/analytics" target="_blank">Analytics</a></p>
-        <p>Para abrir o link Deploy, usar: <a href="/deploy" target="_blank">Deploy</a></p>
-        <p>Para abrir o link da lista Analytics: <a href="/analytics/list" target="_blank">Analytics List</a></p>
         <p>Para abrir o link da Documentação: <a href="/api-docs" target="_blank">Documentação</a></p>
-        <p>Para abrir o link Gestão de Stock: <a href="/gestaodestock" target="_blank">Gestão de Stock</a></p>
-        <p>Para abrir o link Organização de Prateleiras: <a href="/organizacaoprateleiras" target="_blank">Organização de Prateleiras</a></p>
       </body>
     </html>
   `);
 });
+
+/**
+ * @swagger
+ * /config:
+ *   post:
+ *     summary: Processa os dados enviados no formulário de configuração
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             $ref: '#/components/schemas/Configuration'
+ *     responses:
+ *       200:
+ *         description: Exibe os dados recebidos e permite correções
+ */
 
 // POST /config - Processa os dados enviados
 router.post("/", (req, res) => {
@@ -89,38 +147,26 @@ router.post("/", (req, res) => {
 
           <button type="submit">Corrigir</button>
         </form>
-        <form action="/config" method="GET">
-          <button type="submit">Reiniciar Formulário</button>
-        </form>
       </body>
     </html>
   `);
 });
 
-// POST /config/edit - Processa as correções
-router.post("/edit", (req, res) => {
-  const { error } = configSchema.validate(req.body);
-  if (error) {
-    return res.status(400).send(`<h3 style="color: red;">Erro: ${error.details[0].message}</h3>`);
-  }
-
-  submittedData = req.body;
-
-  res.send(`
-    <html>
-      <body>
-        <h2>Dados Corrigidos:</h2>
-        <p>Nível de Stock Inicial: ${submittedData.nivel_stock_inicial}</p>
-        <p>Objetivo de Vendas: ${submittedData.objetivo_vendas}</p>
-        <p>Duração da Campanha: ${submittedData.duracao_campanha}</p>
-        <p>Descrição do Cenário: ${submittedData.descricao_cenario}</p>
-        <form action="/config" method="GET">
-          <button type="submit">Reiniciar Formulário</button>
-        </form>
-      </body>
-    </html>
-  `);
-});
+/**
+ * @swagger
+ * /config/json_params_url:
+ *   get:
+ *     summary: Obtém parâmetros configuráveis em formato JSON
+ *     responses:
+ *       200:
+ *         description: Parâmetros configuráveis
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ */
 
 // GET /config/json_params_url
 router.get("/json_params_url", (req, res) => {
@@ -130,6 +176,50 @@ router.get("/json_params_url", (req, res) => {
     { name: "duracao_campanha", type: "integer" },
     { name: "descricao_cenario", type: "text/plain" },
   ]);
+});
+
+/**
+ * @swagger
+ * /config/adapted:
+ *   get:
+ *     summary: Obtém parâmetros adaptados para o formato interno.
+ *     description: Retorna parâmetros do formato Inven!RA adaptados para o formato interno utilizado no sistema.
+ *     responses:
+ *       200:
+ *         description: Parâmetros adaptados com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 stockLevel:
+ *                   type: integer
+ *                   description: Nível inicial de stock.
+ *                   example: 100
+ *                 salesGoal:
+ *                   type: integer
+ *                   description: Objetivo de vendas.
+ *                   example: 200
+ *                 campaignDuration:
+ *                   type: integer
+ *                   description: Duração da campanha em dias.
+ *                   example: 7
+ *                 scenarioDescription:
+ *                   type: string
+ *                   description: Descrição do cenário.
+ *                   example: "Campanha de Natal"
+ */
+
+// GET /config/adapted_params
+router.get("/adapted", (req, res) => {
+  const adaptedParams = configAdapter.adaptInvenraParams({
+    nivel_stock_inicial: 100,
+    objetivo_vendas: 200,
+    duracao_campanha: 7,
+    descricao_cenario: "Campanha de Natal",
+  });
+
+  res.json(adaptedParams);
 });
 
 module.exports = router;
