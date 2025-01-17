@@ -15,9 +15,12 @@ const path = require("path");
 const configRoutes = require("./routes/config");
 const deployRoutes = require("./routes/deploy");
 const analyticsRoutes = require("./routes/analytics");
+const strategyRoutes = require("./routes/strategies"); // Importa as rotas das estratégias
 
 const { router: GestaoDeStockRouter } = require("./models/GestaoDeStockFactory");
 const { router: OrganizacaoDePrateleirasRouter } = require("./models/OrganizacaoDePrateleirasFactory");
+const simulationManagerRoutes = require("./services/SimulationManager"); // Importa o serviço
+
 
 // Inicializar aplicação
 const app = express();
@@ -35,6 +38,8 @@ require("./swagger")(app); // Adiciona documentação Swagger em /api-docs
 app.use("/config", configRoutes);
 app.use("/deploy", deployRoutes);
 app.use("/analytics", analyticsRoutes);
+app.use("/strategies", strategyRoutes); // Registra as rotas das estratégias
+app.use("/simulation", simulationManagerRoutes);
 
 if (GestaoDeStockRouter) {
   app.use("/gestaodestock", GestaoDeStockRouter);
@@ -48,76 +53,89 @@ app.use("/tests", express.static(path.join(__dirname, "mochawesome-report")));
 
 // Página inicial
 app.get("/", (req, res) => {
-    const today = new Date().toLocaleDateString("pt-PT", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
-  
-    res.send(`
-      <html>
-        <body>
-          <h1>Bem-vindo à API de Atividades / Retail4everyone</h1>
-          
-          <p>Acesso à documentação em: 
-            <a href="/api-docs" target="_blank">Swagger API Docs</a>
-          </p>
-          
-          <h2>Produto Abstrato e Produto Concreto:</h2>
-          <ul>
-            <li>
-              <a href="/gestaodestock" target="_blank">Produto Concreto: Gestão de Stock</a>
-            </li>
-            <li>
-              <a href="/organizacaoprateleiras" target="_blank">Produto Concreto: Organização de Prateleiras</a>
-            </li>
-          </ul>
-
-          <h2>Padrão de estrutura - Adapter:</h2>
-          <ul>
-            <li>
-              <a href="/config/adapted" target="_blank">Resultados do Adapter</a>
-            </li>
-          </ul>
-          
-          <h2>Links úteis:</h2>
-          <ul>
-            <li>
-              <a href="/config" target="_blank">Configuração de Atividades</a>
-            </li>
-            <li>
-              <a href="/deploy" target="_blank">Deploy de Atividades</a>
-            </li>
-            <li>
-              <a href="/analytics" target="_blank">Analytics</a>
-            </li>
-            <li>
-              <a href="/analytics/list" target="_blank">Lista de Analytics</a>
-            </li>
-            <li>
-              <a href="/tests/mochawesome.html" target="_blank">Ver resultados dos testes: Relatório de Testes</a>
-            </li>
-          </ul>
-          
-          <h2>Outros recursos:</h2>
-          <ul>
-            <li>
-              <a href="https://github.com/ricarduz/ArquiteturaPadroesSoftware2024" target="_blank">Repositório GitHub</a>
-            </li>
-            <li>
-              <a href="/" target="_blank">Render - Página Inicial</a>
-            </li>
-          </ul>
-          
-          <footer style="margin-top: 20px; font-size: 0.9em; color: #555;">
-            <p>Autor: Ricardo Isaias Serafim | Email: <a href="mailto:2302605@estudante.uab.pt">2302605@estudante.uab.pt</a></p>
-            <p>Data: ${today}</p>
-          </footer>
-        </body>
-      </html>
-    `);
+  const today = new Date().toLocaleDateString("pt-PT", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
   });
-  
+
+  res.send(`
+    <html>
+      <body>
+        <h1>Bem-vindo à API de Atividades / Retail4everyone</h1>
+        
+        <p>Acesso à documentação em: 
+          <a href="/api-docs" target="_blank">Swagger API Docs</a>
+        </p>
+        
+        <h2>Produto Abstrato e Produto Concreto:</h2>
+        <ul>
+          <li>
+            <a href="/gestaodestock" target="_blank">Produto Concreto: Gestão de Stock</a>
+          </li>
+          <li>
+            <a href="/organizacaoprateleiras" target="_blank">Produto Concreto: Organização de Prateleiras</a>
+          </li>
+        </ul>
+
+        <h2>Padrão de estrutura - Adapter:</h2>
+        <ul>
+          <li>
+            <a href="/config/adapted" target="_blank">Resultados do Adapter</a>
+          </li>
+        </ul>
+
+        <h2>Padrão de Comportamento - Estratégias:</h2>
+        <ul>
+          <li>
+            <a href="/strategies/FrequentStockBreaksStrategy" target="_blank">Executar Estratégia 1: Identificação de Ruturas de Stock Frequentes </a>
+          </li>
+          <li>
+            <a href="/strategies/GeneralPerformanceClassificationStrategy" target="_blank">Executar Estratégia 2: Classificação Geral do Desempenho</a>
+          </li>
+          <li>
+            <a href="/strategies/PerformanceAverageStrategy" target="_blank">Executar Estratégia 3: Cálculo da Média de Performance</a>
+          </li>
+        </ul>
+        
+        <h2>Links úteis:</h2>
+        <ul>
+          <li>
+            <a href="/config" target="_blank">Configuração de Atividades</a>
+          </li>
+          <li>
+            <a href="/deploy" target="_blank">Deploy de Atividades</a>
+          </li>
+          <li>
+            <a href="/analytics" target="_blank">Analytics</a>
+          </li>
+          <li>
+            <a href="/analytics/list" target="_blank">Lista de Analytics</a>
+          </li>
+          <li>
+            <a href="/tests/mochawesome.html" target="_blank">Ver resultados dos testes: Relatório de Testes</a>
+          </li>
+        </ul>
+        
+        <h2>Outros recursos:</h2>
+        <ul>
+          <li>
+            <a href="https://github.com/ricarduz/ArquiteturaPadroesSoftware2024" target="_blank">Repositório GitHub</a>
+          </li>
+          <li>
+            <a href="/" target="_blank">Render - Página Inicial</a>
+          </li>
+        </ul>
+        
+        <footer style="margin-top: 20px; font-size: 0.9em; color: #555;">
+          <p>Autor: Ricardo Isaias Serafim | Email: <a href="mailto:2302605@estudante.uab.pt">2302605@estudante.uab.pt</a></p>
+          <p>Data: ${today}</p>
+        </footer>
+      </body>
+    </html>
+  `);
+});
+
 // Listar endpoints (útil para depuração)
 app.get("/endpoints", (req, res) => {
   res.json(listEndpoints(app));

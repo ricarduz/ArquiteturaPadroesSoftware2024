@@ -1,78 +1,140 @@
 /**
+ * analytics.js
  * Autor: Ricardo Isaias Serafim
  * Email: 2302605@estudante.uab.pt
- * Descrição: Rotas relacionadas à coleta e exibição de dados analíticos.
+ * Descrição: Rotas relacionadas à coleta e exibição de dados analíticos, com suporte a estratégias de análise.
  */
 
 const express = require("express");
 const router = express.Router();
+const DataStorage = require("../services/DataStorage");
+const PerformanceAverageStrategy = require("../strategies/PerformanceAverageStrategy");
+const FrequentStockBreaksStrategy = require("../strategies/FrequentStockBreaksStrategy");
+const GeneralPerformanceClassificationStrategy = require("../strategies/GeneralPerformanceClassificationStrategy");
+
+// Instância do Armazenamento de Dados
+const dataStorage = new DataStorage();
+
+// Mock de dados analíticos
+const analyticsMock = [
+  {
+    inveniraStdID: "gestor001",
+    quantAnalytics: [
+      { name: "Tempo_decisão", value: 120 },
+      { name: "Precisao_encomendas", value: 95 },
+    ],
+    qualAnalytics: [
+      { name: "Feedback_formador", value: "Excelente gestão de stocks!" },
+    ],
+  },
+];
+
+// Dados analíticos simulados para testes
+dataStorage.addData({ performance: 85, stockBreaks: 3 });
+dataStorage.addData({ performance: 70, stockBreaks: 8 });
+dataStorage.addData({ performance: 95, stockBreaks: 1 });
 
 /**
  * @swagger
- * components:
- *   schemas:
- *     AnalyticsRequest:
- *       type: object
- *       required:
- *         - activityID
- *       properties:
- *         activityID:
- *           type: string
- *           description: "ID da atividade para a qual os dados analíticos são requisitados"
- *       example:
- *         activityID: "123"
- *     AnalyticsResponse:
- *       type: object
- *       properties:
- *         activityID:
- *           type: string
- *           description: "ID da atividade"
- *         inveniraStdID:
- *           type: string
- *           description: "ID padrão da Inven!RA"
- *         quantAnalytics:
- *           type: array
- *           items:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *                 description: "Nome da métrica quantitativa"
- *               value:
- *                 type: number
- *                 description: "Valor da métrica quantitativa"
- *         qualAnalytics:
- *           type: array
- *           items:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *                 description: "Nome da métrica qualitativa"
- *               value:
- *                 type: string
- *                 description: "Valor da métrica qualitativa"
- *       example:
- *         activityID: "123"
- *         inveniraStdID: "gestor001"
- *         quantAnalytics:
- *           - name: "Tempo_decisão"
- *             value: 120
- *           - name: "Precisao_encomendas"
- *             value: 95
- *         qualAnalytics:
- *           - name: "Feedback_formador"
- *             value: "Excelente gestão de stocks!"
+ * /analytics/average-performance:
+ *   get:
+ *     summary: Calcula a média de performance dos dados analíticos.
+ *     responses:
+ *       200:
+ *         description: Retorna a média de performance.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 averagePerformance:
+ *                   type: number
+ *                   description: Média de performance.
  */
+router.get("/average-performance", (req, res) => {
+  try {
+    if (dataStorage.isEmpty()) {
+      return res.status(404).json({ error: "Nenhum dado disponível para análise." });
+    }
+    const strategy = new PerformanceAverageStrategy();
+    const result = dataStorage.analyzeData(strategy);
+    res.json({ averagePerformance: result });
+  } catch (error) {
+    console.error("Erro em /average-performance:", error.message);
+    res.status(500).json({ error: "Erro interno ao calcular média de performance." });
+  }
+});
+
+/**
+ * @swagger
+ * /analytics/stock-breaks:
+ *   get:
+ *     summary: Identifica entradas com ruturas de stock frequentes.
+ *     responses:
+ *       200:
+ *         description: Retorna uma lista de entradas com ruturas frequentes.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 frequentStockBreaks:
+ *                   type: number
+ *                   description: Número de ruturas frequentes.
+ */
+router.get("/stock-breaks", (req, res) => {
+  try {
+    if (dataStorage.isEmpty()) {
+      return res.status(404).json({ error: "Nenhum dado disponível para análise." });
+    }
+    const strategy = new FrequentStockBreaksStrategy();
+    const result = dataStorage.analyzeData(strategy);
+    res.json({ frequentStockBreaks: result });
+  } catch (error) {
+    console.error("Erro em /stock-breaks:", error.message);
+    res.status(500).json({ error: "Erro interno ao identificar ruturas de stock." });
+  }
+});
+
+/**
+ * @swagger
+ * /analytics/classification:
+ *   get:
+ *     summary: Classifica o desempenho geral dos dados analíticos.
+ *     responses:
+ *       200:
+ *         description: Retorna a classificação geral de desempenho.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 performanceClassification:
+ *                   type: string
+ *                   description: Classificação do desempenho geral.
+ */
+router.get("/classification", (req, res) => {
+  try {
+    if (dataStorage.isEmpty()) {
+      return res.status(404).json({ error: "Nenhum dado disponível para análise." });
+    }
+    const strategy = new GeneralPerformanceClassificationStrategy();
+    const result = dataStorage.analyzeData(strategy);
+    res.json({ performanceClassification: result });
+  } catch (error) {
+    console.error("Erro em /classification:", error.message);
+    res.status(500).json({ error: "Erro interno ao classificar desempenho." });
+  }
+});
 
 /**
  * @swagger
  * /analytics/list:
  *   get:
- *     summary: Lista os tipos de métricas disponíveis
+ *     summary: Lista os tipos de métricas disponíveis.
  *     responses:
  *       200:
- *         description: "Retorna uma lista das métricas qualitativas e quantitativas disponíveis"
+ *         description: Retorna uma lista das métricas qualitativas e quantitativas disponíveis.
  *         content:
  *           application/json:
  *             schema:
@@ -85,10 +147,7 @@ const router = express.Router();
  *                     properties:
  *                       name:
  *                         type: string
- *                         description: "Nome da métrica qualitativa"
- *                       type:
- *                         type: string
- *                         description: "Tipo de dado (ex.: text/plain)"
+ *                         description: Nome da métrica qualitativa.
  *                 quantAnalytics:
  *                   type: array
  *                   items:
@@ -96,90 +155,11 @@ const router = express.Router();
  *                     properties:
  *                       name:
  *                         type: string
- *                         description: "Nome da métrica quantitativa"
- *                       type:
- *                         type: string
- *                         description: "Tipo de dado (ex.: integer)"
+ *                         description: Nome da métrica quantitativa.
  */
-
-/**
- * @swagger
- * /analytics:
- *   get:
- *     summary: Verifica o funcionamento do endpoint de Analytics
- *     responses:
- *       200:
- *         description: "Mensagem indicando o funcionamento do endpoint"
- *         content:
- *           text/plain:
- *             schema:
- *               type: string
- */
-
-/**
- * @swagger
- * /analytics:
- *   post:
- *     summary: Retorna dados analíticos simulados para um activityID específico
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/AnalyticsRequest'
- *     responses:
- *       200:
- *         description: "Dados analíticos simulados para o activityID fornecido"
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/AnalyticsResponse'
- *       400:
- *         description: "Erro de validação - activityID ausente"
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   description: "Mensagem de erro"
- */
-
-// Dados Mock para Analytics
-const analyticsMock = [
-  {
-    inveniraStdID: "gestor001",
-    quantAnalytics: [
-      { name: "Tempo_decisão", value: 120 },
-      { name: "Precisao_encomendas", value: 95 },
-      { name: "Taxa_cumprimento_vendas", value: 90 },
-    ],
-    qualAnalytics: [
-      { name: "Feedback_formador", value: "Excelente gestão de stocks!" },
-    ],
-  },
-  {
-    inveniraStdID: "gestor002",
-    quantAnalytics: [
-      { name: "Tempo_decisão", value: 150 },
-      { name: "Precisao_encomendas", value: 80 },
-      { name: "Taxa_cumprimento_vendas", value: 85 },
-    ],
-    qualAnalytics: [
-      { name: "Feedback_formador", value: "Boas decisões, mas atenção ao tempo!" },
-    ],
-  },
-];
-
-// GET /analytics/list - Lista os Tipos de Métricas Disponíveis
 router.get("/list", (req, res) => {
   res.json({
-    qualAnalytics: [
-      { name: "Feedback_formador", type: "text/plain" },
-    ],
+    qualAnalytics: [{ name: "Feedback_formador", type: "text/plain" }],
     quantAnalytics: [
       { name: "Tempo_decisão", type: "integer" },
       { name: "Precisao_encomendas", type: "percentage" },
@@ -189,28 +169,28 @@ router.get("/list", (req, res) => {
   });
 });
 
-// GET /analytics - Endpoint Geral de Informação
-router.get("/", (req, res) => {
-  res.send(`
-    <html>
-      <body>
-        <h2>O Ricardo indica que o endpoint de Analytics está a funcionar!</h2>
-        <p>Use /analytics/list ou POST para /analytics para pedidos específicos. 
-        </p>
-      </body>
-    </html>
-  `);
-});
-
-// POST /analytics - Retorna Dados Simulados Baseados no activityID
+/**
+ * @swagger
+ * /analytics:
+ *   post:
+ *     summary: Retorna dados analíticos simulados para um activityID específico.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/AnalyticsRequest'
+ *     responses:
+ *       200:
+ *         description: Retorna dados analíticos simulados.
+ */
 router.post("/", (req, res) => {
   const { activityID } = req.body;
 
   if (!activityID) {
-    return res.status(400).json({ error: "Missing activityID" });
+    return res.status(400).json({ error: "O campo activityID é obrigatório." });
   }
 
-  // Simula os dados para o activityID fornecido
   const analyticsData = analyticsMock.map((entry) => ({
     activityID,
     inveniraStdID: entry.inveniraStdID,

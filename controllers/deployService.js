@@ -1,4 +1,5 @@
 /**
+ * deployService.js
  * Autor: Ricardo Isaias Serafim
  * Email: 2302605@estudante.uab.pt
  * Descrição: Serviço responsável por gerar URLs dinâmicas.

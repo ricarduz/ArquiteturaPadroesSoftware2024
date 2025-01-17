@@ -6,11 +6,11 @@
  */
 const express = require("express");
 const router = express.Router();
-
-const ActivityFactory = require("./ActivityFactory");
 const GestaoDeStock = require("./GestaoDeStock");
 
-class GestaoDeStockFactory extends ActivityFactory {
+const ActivityFactory = require("./ActivityFactory");
+
+class GestaoDeStockFactory {
   /**
    * Cria uma nova atividade de Gestão de Stock.
    * 
@@ -21,6 +21,9 @@ class GestaoDeStockFactory extends ActivityFactory {
    * @returns {GestaoDeStock} Instância de GestaoDeStock.
    */
   createActivity({ name, description, stockLevel }) {
+    if (!name || !description || typeof stockLevel !== "number") {
+      throw new Error("Todos os parâmetros (name, description, stockLevel) são obrigatórios.");
+    }
     return new GestaoDeStock(name, description, stockLevel);
   }
 }
@@ -48,9 +51,9 @@ router.get("/", (req, res) => {
   res.send(`
     <html>
       <body>
-        <h2>O Ricardo indica que o endpoint de Gestão de Stocks está a funcionar!</h2>
+        <h2>O Ricardo indica que o endpoint de Gestão de Stock está a funcionar!</h2>
         <p>Para abrir os testes realizados, use: 
-          <a href="/tests/mochawesome.html" target="_blank">Testes de Gestão de Stocks</a>
+          <a href="/tests/mochawesome.html" target="_blank">Testes de Gestão de Stock</a>
         </p>
       </body>
     </html>
@@ -58,5 +61,3 @@ router.get("/", (req, res) => {
 });
 
 module.exports = { GestaoDeStockFactory, router };
-
-

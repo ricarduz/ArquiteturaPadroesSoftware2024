@@ -6,14 +6,13 @@
  */
 const express = require("express");
 const router = express.Router();
+const OrganizacaoDePrateleiras = require("./OrganizacaoDePrateleiras");
 
 const ActivityFactory = require("./ActivityFactory");
-const OrganizacaoDePrateleiras = require("./OrganizacaoDePrateleiras");
 
 class OrganizacaoDePrateleirasFactory {
   /**
    * Cria uma nova instância de OrganizacaoDePrateleiras.
-   * 
    * @param {Object} params - Parâmetros para criar a atividade.
    * @param {string} params.name - Nome da atividade.
    * @param {string} params.description - Descrição da atividade.
@@ -24,7 +23,6 @@ class OrganizacaoDePrateleirasFactory {
     if (!name || !description || !shelfLayout) {
       throw new Error("Todos os parâmetros (name, description, shelfLayout) são obrigatórios.");
     }
-
     return new OrganizacaoDePrateleiras(name, description, shelfLayout);
   }
 }
@@ -47,14 +45,14 @@ class OrganizacaoDePrateleirasFactory {
  *         description: Endpoint funcionando corretamente.
  */
 
-// Endpoint para verificar funcionamento
+// Rota para verificar o funcionamento
 router.get("/", (req, res) => {
   res.send(`
     <html>
       <body>
         <h2>O Ricardo indica que o endpoint de Organização de Prateleira está a funcionar!</h2>
         <p>Para abrir os testes realizados, use: 
-          <a href="/tests/mochawesome.html" target="_blank">Testes de Organização de Prateleira</a>
+          <a href="/tests/mochawesome.html" target="_blank">Testes de Organização de Prateleiras</a>
         </p>
       </body>
     </html>

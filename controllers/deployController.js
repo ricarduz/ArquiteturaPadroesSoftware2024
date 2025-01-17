@@ -1,5 +1,5 @@
 /**
- * DeployController.js
+ * deployController.js
  * Autor: Ricardo Isaias Serafim
  * Email: 2302605@estudante.uab.pt
  * Descrição: Gestão da criação de instâncias de atividades.
@@ -16,7 +16,9 @@ exports.createDeployment = (req, res) => {
 
   // Validação básica dos dados recebidos
   if (!activityType || !name || !description || !params) {
-    const errorResponse = { error: "Missing required fields. Ensure activityType, name, description, and params are provided." };
+    const errorResponse = {
+      error: "Missing required fields. Ensure activityType, name, description, and params are provided.",
+    };
     console.error(`Validation Error:`, errorResponse);
     return res.status(400).json(errorResponse);
   }
@@ -42,11 +44,17 @@ exports.createDeployment = (req, res) => {
           return res.status(400).json(errorResponse);
         }
         const organizacaoFactory = new OrganizacaoDePrateleirasFactory();
-        activity = organizacaoFactory.createActivity({ name, description, shelfLayout: params.shelfLayout });
+        activity = organizacaoFactory.createActivity({
+          name,
+          description,
+          shelfLayout: params.shelfLayout,
+        });
         break;
 
       default:
-        const errorResponse = { error: `Unknown activity type: ${activityType}. Supported types are GestaoDeStock and OrganizacaoDePrateleiras.` };
+        const errorResponse = {
+          error: `Unknown activity type: ${activityType}. Supported types are GestaoDeStock and OrganizacaoDePrateleiras.`,
+        };
         console.error(`Validation Error:`, errorResponse);
         return res.status(400).json(errorResponse);
     }

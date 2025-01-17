@@ -2,20 +2,21 @@
  * index.test.js
  * Autor: Ricardo Isaias Serafim
  * Email: 2302605@estudante.uab.pt
- * Descrição: Agregador de testes para Produtos, Fábricas e Endpoints.
+ * Descrição: Agregador de testes para Produtos, Factory, Endpoints e Estratégias.
  */
 
 const assert = require("assert");
 const request = require("supertest");
 const app = require("../app");
-const GestaoDeStockFactory = require("../models/GestaoDeStockFactory");
-const OrganizacaoDePrateleirasFactory = require("../models/OrganizacaoDePrateleirasFactory");
 const GestaoDeStock = require("../models/GestaoDeStock");
+const GestaoDeStockFactory = require("../models/GestaoDeStockFactory");
 const OrganizacaoDePrateleiras = require("../models/OrganizacaoDePrateleiras");
+const OrganizacaoDePrateleirasFactory = require("../models/OrganizacaoDePrateleirasFactory");
+const PerformanceAverageStrategy = require("../strategies/PerformanceAverageStrategy");
+const FrequentStockBreaksStrategy = require("../strategies/FrequentStockBreaksStrategy");
+const GeneralPerformanceClassificationStrategy = require("../strategies/GeneralPerformanceClassificationStrategy");
 
-/**
- * Testes relacionados a Produtos
- */
+// Testes relacionados a Produtos
 describe("Teste de Produtos", () => {
   describe("Produtos", () => {
     it("Deve criar e executar uma atividade de Gestão de Stock", () => {
@@ -64,9 +65,7 @@ describe("Teste de Produtos", () => {
   });
 });
 
-/**
- * Testes relacionados ao Endpoint /deploy
- */
+// Testes relacionados ao Endpoint /deploy
 describe("Testes do Endpoint /deploy", () => {
   it("Deve criar uma atividade de Gestão de Stock com sucesso", async () => {
     const response = await request(app)
@@ -113,12 +112,10 @@ describe("Testes do Endpoint /deploy", () => {
   });
 });
 
-/**
- * Testes relacionados ao Endpoint /config
- */
+// Testes relacionados ao Endpoint /config
 describe("Testes do Endpoint /config", () => {
   it("Deve retornar os parâmetros adaptados com sucesso", async () => {
-    const response = await request(app).get("/config");
+    const response = await request(app).get("/config/adapted");
 
     assert.strictEqual(response.status, 200);
     assert.strictEqual(response.body.stockLevel, 100);
@@ -137,5 +134,35 @@ describe("Testes do Endpoint /config", () => {
 
     assert.strictEqual(response.status, 400);
     assert.ok(response.text.includes("Erro"));
+  });
+});
+
+// Testes relacionados às Estratégias
+describe("Testes das Estratégias de Análise", () => {
+  it("Deve calcular a média de performance corretamente", () => {
+    const strategy = new PerformanceAverageStrategy();
+    const data = [85, 90, 95];
+    const result = strategy.execute(data);
+    assert.strictEqual(result, 90);
+  });
+
+  it("Deve identificar corretamente as ruturas de stock frequentes", () => {
+    const strategy = new FrequentStockBreaksStrategy();
+    const data = [
+      { stockLevel: 0 },
+      { stockLevel: 10 },
+      { stockLevel: 0 },
+      { stockLevel: 20 },
+      { stockLevel: 0 },
+    ];
+    const result = strategy.execute(data);
+    assert.strictEqual(result, 3);
+  });
+
+  it("Deve classificar corretamente o desempenho geral", () => {
+    const strategy = new GeneralPerformanceClassificationStrategy();
+    const data = [85, 90, 95];
+    const result = strategy.execute(data);
+    assert.strictEqual(result, "Excelente");
   });
 });

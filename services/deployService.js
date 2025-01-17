@@ -1,9 +1,11 @@
 /**
+ * deployService.js
  * Autor: Ricardo Isaias Serafim
  * Email: 2302605@estudante.uab.pt
  * Descrição: Serviço responsável por gerar URLs dinâmicas.
  * Classe URLFactory
  */
+
 class URLFactory {
     /**
      * Cria a URL de uma instância de simulação com base no `activityID`.
@@ -20,5 +22,3 @@ class URLFactory {
   }
   
   module.exports = URLFactory;
-  
-  

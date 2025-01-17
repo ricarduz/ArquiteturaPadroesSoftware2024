@@ -20,7 +20,7 @@ class OrganizacaoDePrateleiras extends Activity {
   }
 
   /**
-   * Retorna os detalhes da atividade.
+   * Retorna os detalhes da atividade.  
    * 
    * @returns {Object} Detalhes da atividade.
    */

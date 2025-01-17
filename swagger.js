@@ -1,4 +1,5 @@
 /**
+ * swagger.js
  * Autor: Ricardo Isaias Serafim
  * Email: 2302605@estudante.uab.pt
  * Descrição: Configuração do Swagger para geração de documentação da API Retail4Everyone.
@@ -14,15 +15,27 @@ const swaggerUi = require("swagger-ui-express");
  * - `servers`: Define os servidores onde a API pode ser acessada, incluindo os URLs
  *   de desenvolvimento e produção.
  * - `apis`: Especifica os arquivos onde os comentários JSDoc estão localizados
- *   (neste caso, arquivos na pasta `routes`).
+ *   (neste caso, arquivos nas pastas `routes`, `models` e `controllers`).
  */
 const options = {
   definition: {
     openapi: "3.0.0", // Define a versão do OpenAPI (Swagger 3.0.0)
     info: {
-      title: "Retail4Everyone", //Nome do Projeto
+      title: "Retail4Everyone", // Nome do projeto
       version: "1.0.0", // Versão da API
-      description: "API para Inven!RA - Documentação da plataforma Retail4Everyone.", // Breve descrição
+      description: `
+      API para a plataforma Retail4Everyone, integrada com Inven!RA.
+      Esta documentação fornece informações detalhadas sobre os endpoints disponíveis,
+      modelos de dados e interações esperadas.
+      `,
+      contact: {
+        name: "Ricardo Isaias Serafim",
+        email: "2302605@estudante.uab.pt",
+      },
+      license: {
+        name: "MIT",
+        url: "https://opensource.org/licenses/MIT",
+      },
     },
     servers: [
       {
@@ -34,11 +47,30 @@ const options = {
         description: "Servidor de Produção", // Descrição do ambiente
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
   // Diretório onde os arquivos de rotas documentados com Swagger estão localizados
-  apis: ["./routes/*.js", "./models/*.js", "./controllers/*.js"],
+  apis: [
+    "./routes/*.js", 
+    "./models/*.js", 
+    "./controllers/*.js", 
+    "./services/*.js", 
+    "./adapters/*.js" // Inclui os novos adapters, se houver
+  ],
 };
-
 
 /**
  * Geração de documentação
@@ -58,7 +90,7 @@ const specs = swaggerJsdoc(options);
  */
 module.exports = (app) => {
   // Configurar a interface Swagger no endpoint /api-docs
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
 
   console.log(
     `Swagger docs configurados. Acesse a documentação em: http://localhost:${process.env.PORT || 3000}/api-docs`
