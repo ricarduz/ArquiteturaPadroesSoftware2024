@@ -6,7 +6,6 @@
     "start": "node server.js",
     "test": "mocha tests/ --reporter mochawesome --reporter-options reportDir=mochawesome-report,reportFilename=mochawesome"
   },
-
   "keywords": [],
   "author": "Ricardo Isaias Serafim",
   "license": "ISC",
@@ -18,6 +17,7 @@
     "express": "^4.21.1",
     "express-list-endpoints": "^7.1.1",
     "joi": "^17.13.3",
+    "joi-to-swagger": "^3.0.0",
     "morgan": "^1.10.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
@@ -28,4 +28,3 @@
     "mochawesome": "^7.1.3"
   }
 }
-
